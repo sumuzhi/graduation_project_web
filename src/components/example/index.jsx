@@ -1,17 +1,11 @@
-import React from "react";
+import { Button, Toast } from "@douyinfe/semi-ui";
+import React, { Component } from "react";
 
-import { Color } from "./color";
-import Buttons from "./Buttons";
-import ShowArea from "./ShowArea";
-
-class Index extends React.Component {
+class Index extends Component {
   render() {
     return (
       <div>
-        <Color>
-          <ShowArea></ShowArea>
-          <Buttons></Buttons>
-        </Color>
+        <Button  onClick={() => Toast.success({ content: 'welcome' })}>按钮</Button>
       </div>
     );
   }

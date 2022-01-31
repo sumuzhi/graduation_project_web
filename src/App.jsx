@@ -1,20 +1,26 @@
 import { Component } from "react";
-import { Col, Row } from '@douyinfe/semi-ui';
+import { Col, Row, Tabs, TabPane } from '@douyinfe/semi-ui';
 
 import "./App.css";
-import List from './containers/List'
+import Message from './containers/Message'
+import Nav from './components/Nav'
+import Talk from './components/Talk'
 
 class App extends Component {
 
   render() {
-    return <div>
-      <Row>
-        <Col span={8}>
-          <List></List>
-        </Col>
-        <Col span={16}><div className="col-content">col-8</div></Col>
-      </Row>
-    </div>;
+    return (
+      <div>
+        <Row>
+          <Col span={6}>
+            <Nav />
+          </Col>
+          <Col span={16}>
+            <Talk />
+          </Col>
+        </Row>
+      </div>
+    );
   }
 }
 

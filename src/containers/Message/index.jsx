@@ -3,22 +3,27 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 
 
-import { List, Button, Avatar, Spin } from '@douyinfe/semi-ui';
-import { resize_height } from '../../redux/actions/height_resize'
+import { List, Avatar, Spin, } from '@douyinfe/semi-ui';
+import { resize_heightAction } from '../../redux/actions/height_resize'
 import './index.css'
 
+
+
 class index extends Component {
+  state = {
+    active: 0
+  }
 
   constructor() {
     super();
-
-    const count = 7;
+    const count = 23;
     const dataList = [];
     for (let i = 0; i < 100; i++) {
       dataList.push({
         color: 'grey',
         title: `Semi Design Title ${i}`,
         loading: false,
+        key: i
       });
     }
     this.data = dataList;
@@ -51,19 +56,23 @@ class index extends Component {
     };
   }
 
+  messageClick = (item) => {
+    this.setState({ active: item.key }, () => {
+      console.log(this.state.active);
+    })
+  }
+
   handleHeight = () => {
     const screenHeight = window.innerHeight
-    console.log(screenHeight);
     this.props.changeHeight(screenHeight)
   }
 
   componentDidMount() {
     this.fetchData();
     document.documentElement.style.overflow = 'hidden';
-    let aaa = window.innerHeight
-    console.log(aaa);
     window.addEventListener("resize", this.handleHeight)
   }
+
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleHeight)
@@ -82,12 +91,12 @@ class index extends Component {
             lineHeight: '32px',
           }}
         >
-          <Button onClick={this.fetchData}>显示更多</Button>
         </div>
       ) : null;
     return (
       <div className="lightscrollbar"
-        style={{ height: this.props.screenHeight, overflow: 'auto', border: '1px solid var(--semi-color-border)', padding: 10 }}>
+        onMouseEnter={this.activeScroll}
+        style={{ height: this.props.screenHeight - 100, overflow: 'auto', padding: 10 }}>
         <InfiniteScroll
           initialLoad={false}
           pageStart={0}
@@ -101,16 +110,22 @@ class index extends Component {
             dataSource={dataSource}
             renderItem={item => (
               <List.Item
+                extra={<Avatar
+                  size='small'
+                  color="green"
+                >1
+                </Avatar>}
+                onClick={() => { this.messageClick(item) }}
+                className={item.key === this.state.active ? "active " : "messageItem"}
                 header={<Avatar color={item.color}>SE</Avatar>}
+                style={{ border: "none" }}
                 main={
                   <div>
                     <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>
                       {item.title}
                     </span>
                     <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                      Semi Design
-                      设计系统包含设计语言以及一整套可复用的前端组件，帮助设计师与开发者更容易地打造高质量的、用户体验一致的、符合设计规范的
-                      Web 应用。
+                      计系统包含设计语言以及一整套可复
                     </p>
                   </div>
                 }
@@ -129,5 +144,5 @@ class index extends Component {
 }
 
 export default connect((state) => ({ screenHeight: state.reHight }), {
-  changeHeight: resize_height
+  changeHeight: resize_heightAction
 })(index)

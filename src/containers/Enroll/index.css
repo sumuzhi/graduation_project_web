@@ -1,0 +1,19 @@
+.fontSet{
+  /* font-size: 16px; */
+  font-weight: 600;
+}
+.bgImage{
+  background-image: url("./bg.png");
+  background-repeat: no-repeat;
+}
+.title{
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.titleFlag{
+  font-size: 30px;
+}
+.titleSubTitle{
+  margin-top: 10px;
+  font-size: 20px;
+}

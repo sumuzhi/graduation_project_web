@@ -143,6 +143,6 @@ class index extends Component {
   }
 }
 
-export default connect((state) => ({ screenHeight: state.reHight }), {
+export default connect((state) => ({ screenHeight: state.reHeight }), {
   changeHeight: resize_heightAction
 })(index)

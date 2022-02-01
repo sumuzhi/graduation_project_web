@@ -29,7 +29,7 @@ class index extends Component {
                 <Form.Input mode="password" field='password' showClear label='密码' style={{ width: '300px' }} placeholder='请输入密码'></Form.Input>
                 <div style={{ display: 'flex', marginTop: 10, alignItems: 'center' }}>
                   <Button theme='borderless' style={{ color: 'var(--semi-color-primary)', marginLeft: 50, cursor: 'pointer' }}>登录</Button>
-                  <Button disabled={values.agree} style={{ marginLeft: "100px" }} htmlType='submit' type="tertiary">注册</Button>
+                  <Button theme='borderless' style={{ marginLeft: "100px" }} htmlType='submit' type="tertiary">注册</Button>
                 </div>
               </>
             )}
@@ -41,5 +41,5 @@ class index extends Component {
   }
 }
 export default connect((state) => ({
-  screenHeight: state.reHight
+  screenHeight: state.reHeight
 }), {})(index)

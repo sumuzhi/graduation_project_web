@@ -25,6 +25,7 @@
 
 
 .circleIcon:hover{
+  cursor: pointer;
   /* padding: 10px; */
   border-radius: 50%;
   background-color: rgb(230, 227, 227);

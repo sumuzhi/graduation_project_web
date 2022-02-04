@@ -1,16 +1,42 @@
 import React, { Component } from 'react';
-import { Form, Input, Toast, Button, Upload, Col, Row, TextArea } from '@douyinfe/semi-ui';
+import { Input, Toast, Button, Upload, Col, Row, TextArea } from '@douyinfe/semi-ui';
 import { IconPlus } from '@douyinfe/semi-icons';
 import { connect } from 'react-redux';
+
+import axios from 'axios';
 
 import './index.css'
 import { resize_heightAction } from '../../redux/actions/height_resize'
 class index extends Component {
 
-  handleSubmit = (values) => {
-    console.log(values);
-    Toast.info('表单已提交');
+  constructor() {
+    super();
+    this.uploadRef = React.createRef()
+  }
+
+  state = {
+    username: '',
+    password: '',
+    signaturePerson: '',
+  }
+
+  handleSubmit = () => {
+    this.uploadRef.current.upload();
   };
+
+  onChange = () => {
+    return (e, ee) => {
+      this.setState({ [ee.target.name]: e })
+    }
+  }
+
+  handleEnroll = (e) => {
+    const { msg, status } = e.response
+    status == 200 ? Toast.success(msg) : Toast.error(msg)
+
+
+  }
+
 
   render() {
     return (
@@ -19,7 +45,6 @@ class index extends Component {
           <Row>
             <Col span={11}>
               <div className='bgImage' style={{ height: this.props.screenHeight }}>
-
               </div>
             </Col>
             <Col span={2}></Col>
@@ -31,34 +56,43 @@ class index extends Component {
               <div>
                 <div className="fontSet" style={{ display: "flex" }}>
                   <div style={{ width: "200px" }}>请输入用户名</div>
-                  <Input showClear size='large' ></Input>
+                  <Input name="username" showClear size='large' onChange={this.onChange()}></Input>
                 </div>
                 <div className="fontSet" style={{ display: "flex", marginTop: "30px" }}>
                   <div style={{ width: "200px" }}>请输入密码</div>
-                  <Input mode="password" showClear size='large' ></Input>
+                  <Input name="password" mode="password" showClear size='large' onChange={this.onChange()}></Input>
                 </div>
                 <div className='fontSet' style={{ display: "flex", marginTop: 30 }}>
                   <div className='ddd' style={{ width: 200, lineHeight: "100px" }}>请输入个性签名</div>
                   <TextArea
+                    name="signaturePerson"
+                    onChange={this.onChange()}
                     style={{ width: 350, height: 80 }}
                     maxCount={20} showClear />
                 </div>
                 <div className="fontSet" style={{ display: "flex", marginTop: 20 }}>
                   <div style={{ width: 100, marginRight: "33px", lineHeight: "100px" }}>请上传头像</div>
                   <Upload
-                    // action={this.action}
-                    // prompt={this.getPrompt(pos, true)}
-                    // style={{ marginLeft: -5 }}
-                    promptPosition={"right"}
+                    upload={() => { return }}
+                    uploadTrigger="custom"
+                    ref={this.uploadRef}
+                    afterUpload={this.handleEnroll}
+                    data={this.state}
+                    fileName="userPhoto"
+                    action='http://localhost:3000/enroll'
+                    accept='image/*'
+                    limit="1"
+                    maxSize={1024} //最大上传5M
+                    onSizeError={() => (Toast.error("上传头像尺寸最大为1M"))}
                     listType="picture"
-                  // defaultFileList={this.state.defaultFileList}
+                  // customRequest={this.uploadRequest}
                   >
                     <IconPlus size="extra-large" />
                   </Upload>
                 </div>
                 <div style={{ display: "flex", marginTop: "30px" }}>
                   <Button theme='borderless' type='tertiary'  >已有账号，前往登录页面</Button>
-                  <Button type="primary" block theme="solid"  >注册</Button>
+                  <Button type="primary" block theme="solid" onClick={this.handleSubmit}  >注册</Button>
                 </div>
               </div>
             </Col>

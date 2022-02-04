@@ -1,5 +1,5 @@
 .fontSet{
-  /* font-size: 16px; */
+  font-size: 14px;
   font-weight: 600;
 }
 .bgImage{
@@ -16,4 +16,7 @@
 .titleSubTitle{
   margin-top: 10px;
   font-size: 20px;
+}
+.semi-form-field-aaaa{
+  padding: 0 !important;
 }

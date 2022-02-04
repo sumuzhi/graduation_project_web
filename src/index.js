@@ -8,6 +8,6 @@ import Enroll from './containers/Enroll'
 
 ReactDOM.render(
   <Provider store={store}>
-    < Enroll />
+    < Login />
   </Provider>
   , document.getElementById("root"));

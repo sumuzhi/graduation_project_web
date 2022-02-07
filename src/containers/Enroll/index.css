@@ -3,7 +3,7 @@
   font-weight: 600;
 }
 .bgImage{
-  background-image: url("./bg.png");
+  background-image: url("../../public/images/bg.png");
   background-repeat: no-repeat;
 }
 .title{
@@ -19,4 +19,8 @@
 }
 .semi-form-field-aaaa{
   padding: 0 !important;
+}
+a:hover{
+  text-decoration: none;
+  color: none;
 }

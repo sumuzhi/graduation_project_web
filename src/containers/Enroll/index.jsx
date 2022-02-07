@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Popover, useFormApi, Input, Toast, Button, Upload, Col, Row, TextArea } from '@douyinfe/semi-ui';
 import { IconPlus } from '@douyinfe/semi-icons';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -17,7 +18,7 @@ class index extends Component {
   state = {
     usernameFlag: false,
     passwordFlag: false,
-    signaturePersonFlag: false,
+    signaturePersonFlag: true,
     username: '',
     password: '',
     signaturePerson: '',
@@ -36,7 +37,11 @@ class index extends Component {
   //~ 点击注册按钮时后的回调函数
   handleEnroll = (e) => {
     const { msg, status } = e.response
-    status == 200 ? Toast.success(msg) : Toast.error(msg)
+    if (status == 200) {
+      Toast.success(msg)
+      // window.location.href = "http://localhost:3000/login"
+    }
+    else Toast.error(msg);
   }
 
   asyncValiusername = (e) => {
@@ -55,8 +60,10 @@ class index extends Component {
   }
 
   asyncValisignaturePerson = (e) => {
-    if (e.length > 30)
+    if (e.length > 30) {
+      this.setState({ signaturePersonFlag: false })
       return "个性签名字数应不超过30";
+    }
     this.setState({ signaturePersonFlag: true })
   }
 
@@ -150,6 +157,7 @@ class index extends Component {
                     style={{ height: 105 }}
                     data={this.state}
                     fileName="userPhoto"
+                    name="userPhoto"
                     action='http://localhost:3000/enroll'
                     accept='image/*'
                     limit="1"
@@ -161,8 +169,8 @@ class index extends Component {
                   </Upload>
                 </div>
                 <div style={{ display: "flex", marginTop: "30px" }}>
-                  <Button theme='borderless' type='tertiary'  >已有账号，前往登录页面</Button>
-                  <Button type="primary" block theme="solid" onClick={this.handleSubmit}  >注册</Button>
+                  <Button theme='borderless' type='tertiary'  ><Link to="/login">已有账号，前往登录页面</Link></Button>
+                  <Button type="primary" block theme="solid" onClick={this.handleSubmit} >注册</Button>
                 </div>
               </div>
             </Col>
@@ -172,6 +180,9 @@ class index extends Component {
     );
   }
 }
-export default connect((state) => ({ screenHeight: state.reHeight }), {
-  changeHeight: resize_heightAction
-})(index)
+export default connect(
+  (state) => ({ screenHeight: state.reHeight }),
+  {
+    changeHeight: resize_heightAction
+  }
+)(index)

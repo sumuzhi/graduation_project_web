@@ -1,7 +1,8 @@
 import { Component } from "react";
-import { Col, Row, Tabs, TabPane } from '@douyinfe/semi-ui';
+import { Col, Row, } from '@douyinfe/semi-ui';
+import { connect } from "react-redux";
+import { Navigate } from "react-router-dom";
 
-import Message from './containers/Message'
 import Nav from './components/Nav'
 import Talk from './containers/Talk'
 
@@ -9,20 +10,28 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Row>
-          <Col span={6}>
-            <Nav />
-          </Col>
-         
-          <Col span={18}>
-            <Talk />
-          </Col>
-          
-        </Row>
-      </div>
+      <>
+        {!this.props.userInfo.isLogin && (
+          <Navigate to="/login" replace={true} />
+        )}
+        <div>
+          <Row>
+            <Col span={6}>
+              <Nav />
+            </Col>
+
+            <Col span={18}>
+              <Talk />
+            </Col>
+
+          </Row>
+        </div>
+      </>
     );
   }
 }
 
-export default App;
+export default connect(
+  state => ({ userInfo: state.userInfo }),
+  {}
+)(App)

@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import JsxParser from 'react-jsx-parser'
 import './index.css'
-import img1 from './1.png'
+import { Link, Navigate } from 'react-router-dom';
+import { LoginSend } from '../../API/index'
+import { saveUserInfoAction } from '../../redux/actions/login_action'
 
 class index extends Component {
   constructor() {
     super()
-    const aaa = React.createElement('<h1>hello world</h1>')
   }
 
   state = {
@@ -27,15 +28,23 @@ class index extends Component {
     axios.get('http://localhost:3000/captcha').then((data) => {
       this.setState({ codeImg: data.data })
     })
-    // Toast.info("11")
   }
 
+
+  //~ 发送请求后的，返回的promise
   postDataForLogin = () => {
     const { username, password, code } = this.state
-    axios.post("http://localhost:3000/login", { username, password, code })
-      .then(({data}) => {
-        const { msg, status } = data
-        status == 200 ? Toast.success(msg) : Toast.error(msg)
+    console.log(username, password, code);
+    LoginSend({ username, password, code })
+      .then((result) => {
+        const { msg, status, data } = result
+        console.log(result)
+        if (status === 200) {
+          this.props.saveUserInfo(data)
+        } else {
+          Toast.error(msg)
+          this.getCodeImg()
+        }
       })
   }
 
@@ -71,7 +80,7 @@ class index extends Component {
   }
 
   asyncValicode = (e) => {
-    const re = /[a-zA-Z0-9]{4}/
+    const re = /[a-zA-Z0-9]{0,4}/
     const a = e.match(re)
     a == null ? this.setState({ codeFlag: false }) : this.setState({ codeFlag: true })
     if (!a) return "验证码格式错误";
@@ -89,63 +98,73 @@ class index extends Component {
   }
 
   render() {
+    let { userInfo } = this.props;
     return (
-      <div className="login" style={{ height: this.props.screenHeight }}>
-        <header>
-        </header>
-        <section>
-          <div className="headerTitle">
-          </div>
-          <Form
-            showValidateIcon={false}
-            onValueChange={(e) => { this.setUserInfo(e) }}
-            labelPosition='left'
-            labelWidth={60}
-            style={{ width: 300 }}
-          >
-            <>
-              <Form.Input
-                validate={this.asyncValiusername}
-                field='username'
-                showClear
-                trigger='blur'
-                label='用户名'
-                style={{ width: '200px' }}
-                placeholder='请输入用用户名'
-              ></Form.Input>
-              <Form.Input
-                validate={this.asyncValipassword}
-                trigger='blur'
-                mode="password"
-                field='password'
-                showClear
-                label='密码'
-                style={{ width: '200px' }}
-                placeholder='请输入密码'
-              />
-              <div className="verify" style={{ display: "flex" }}>
+      <>
+        {userInfo.isLogin && (
+          <Navigate to="/main" replace={true} />
+        )}
+        <div className="login" style={{ height: this.props.screenHeight }}>
+          <header>
+          </header>
+          <section>
+            <div className="headerTitle">
+            </div>
+            <Form
+              showValidateIcon={false}
+              onValueChange={(e) => { this.setUserInfo(e) }}
+              labelPosition='left'
+              labelWidth={60}
+              style={{ width: 300 }}
+            >
+              <>
                 <Form.Input
-                  validate={this.asyncValicode}
-                  field='code'
-                  showClear label='验证码'
-                  style={{ width: '100px' }}
+                  validate={this.asyncValiusername}
+                  field='username'
+                  showClear
+                  trigger='blur'
+                  label='用户名'
+                  style={{ width: '200px' }}
+                  placeholder='请输入用用户名'
+                ></Form.Input>
+                <Form.Input
+                  validate={this.asyncValipassword}
+                  trigger='blur'
+                  mode="password"
+                  field='password'
+                  showClear
+                  label='密码'
+                  style={{ width: '200px' }}
+                  placeholder='请输入密码'
                 />
-                <div onClick={this.getCodeImg} className="imgVerify">
-                  <JsxParser jsx={this.state.codeImg} />
+                <div className="verify" style={{ display: "flex" }}>
+                  <Form.Input
+                    validate={this.asyncValicode}
+                    field='code'
+                    showClear label='验证码'
+                    style={{ width: '100px' }}
+                  />
+                  <div onClick={this.getCodeImg} className="imgVerify">
+                    <JsxParser jsx={this.state.codeImg} />
+                  </div>
                 </div>
-              </div>
-              <div style={{ display: 'flex', marginTop: 10, alignItems: 'center' }}>
-                <Button theme='borderless' style={{ marginLeft: 50 }} onClick={this.handleSubmit}>登录</Button>
-                <Button theme='borderless' style={{ marginLeft: 100 }} type="tertiary">注册</Button>
-              </div>
-            </>
-          </Form>
-        </section>
-        <footer></footer>
-      </div>
+                <div style={{ display: 'flex', marginTop: 10, alignItems: 'center' }}>
+                  <Button theme='borderless' style={{ marginLeft: 50 }} onClick={this.handleSubmit}>登录</Button>
+                  <Button theme='borderless' style={{ marginLeft: 100 }} type="tertiary"><Link to="/enroll">注册</Link></Button>
+                </div>
+              </>
+            </Form>
+          </section>
+          <footer></footer>
+        </div>
+      </>
     );
   }
 }
-export default connect((state) => ({
-  screenHeight: state.reHeight
-}), {})(index)
+
+export default connect(
+  state => ({ screenHeight: state.reHeight, userInfo: state.userInfo }),
+  {
+    saveUserInfo: saveUserInfoAction
+  }
+)(index)

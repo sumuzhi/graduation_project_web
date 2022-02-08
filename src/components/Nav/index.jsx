@@ -5,7 +5,7 @@ import Header from '../Header'
 export default class index extends Component {
 
   state = {
-    showModal: true
+    showModal: false
   }
 
   changeModel = () => {

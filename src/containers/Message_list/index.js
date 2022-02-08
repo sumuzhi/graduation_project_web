@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import { connect } from 'react-redux';
 
-
 import { List, Avatar, Spin, Toast } from '@douyinfe/semi-ui';
 import { resize_heightAction } from '../../redux/actions/height_resize'
+import { friends_list_action } from '../../redux/actions/friend_list_action'
 import './index.css'
 import { getFriendsList } from '../../API/index'
 
@@ -12,7 +12,6 @@ import { getFriendsList } from '../../API/index'
 class index extends Component {
   state = {
     active: 0,
-    friendList: [],
     loading: false,
   }
 
@@ -28,11 +27,13 @@ class index extends Component {
     this.props.changeHeight(screenHeight)
   }
 
+  //好友列表
   sendForList = (username, number_id) => {
     getFriendsList({ username, number_id })
       .then((result) => {
         const { status, data } = result
         if (status === 200) {
+          this.props.getFriendsList(data)
           this.setState({ friendList: [...data] })
         }
       })
@@ -53,7 +54,6 @@ class index extends Component {
   }
 
   render() {
-    const { friendList } = this.state;
     return (
       <div className="lightscrollbar"
         onMouseEnter={this.activeScroll}
@@ -65,7 +65,7 @@ class index extends Component {
           useWindow={false}
         >
           <List
-            dataSource={friendList}
+            dataSource={this.props.friendslist}
             renderItem={item => (
               <List.Item
                 extra={<Avatar
@@ -107,9 +107,11 @@ class index extends Component {
 export default connect(
   (state) => ({
     screenHeight: state.reHeight,
-    userInfo: state.userInfo
+    userInfo: state.userInfo,
+    friendslist: state.friends_lists
   }),
   {
-    changeHeight: resize_heightAction
+    changeHeight: resize_heightAction,
+    getFriendsList: friends_list_action
   }
 )(index)

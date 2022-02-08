@@ -1,44 +1,78 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { friends_list_action } from '../../redux/actions/friend_list_action'
 import { Button, ButtonGroup, Col, Toast, Avatar, List, Form, Modal } from '@douyinfe/semi-ui';
 
-import { searchFriend } from '../../API';
+import { searchFriend, getFriendsList, getPreFriendList, operate_apply, applyToFriend } from '../../API';
 import './index.css'
 
-export default class index extends Component {
+class index extends Component {
 
   state = {
     searchList: [],
     apply_list: [],
+    username: '',
+    number_id: '',
     searchLoading: false
   }
 
-  showDialog = () => {
-    // this.setState({
-    //   visible: true
-    // });
-  }
-  handleOk = (e) => {
-    this.changeModel()
-    console.log('Ok button clicked');
+  //发送申请请求
+  sendApply = (apply_name, apply_id) => {
+    const { username, number_id } = this.state
+    applyToFriend({ apply_id, apply_name, username, number_id })
+      .then((result) => {
+        if (result.status == 200) {
+          Toast.success(result.msg)
+        }
+      })
   }
 
-  handleAfterClose = (e) => {
-    console.log('关闭后的回调');
-  }
+
   //点击取消按钮和取消图标调用的是同一个方法
   handleCancel = (e) => {
+    const { username, number_id } = this.state
     this.changeModel()
     console.log('点击了取消按钮');
+    getFriendsList({ username, number_id }).then((result) => {
+      if (result.status == 200)
+        this.props.getFriendsLists(result.data)
+    })
+  }
+
+  //得到用户的申请列表
+  getPreFriendsList = () => {
+    const { username, number_id } = this.state
+    getPreFriendList({ username, number_id }).then((result) => {
+      if (result.status == 200)
+        this.setState({
+          apply_list: result.data
+        })
+    })
   }
 
   componentDidMount() {
-    console.log(this.props);
+    const { username, number_id } = this.props.userInfo
     this.changeModel = this.props.changeModel
-    // this.show = this.props.show
-    // console.log(this.show);
+    this.setState({
+      username,
+      number_id
+    }, () => {
+      this.getPreFriendsList()
+    })
   }
-  componentWillUnmount() {
-    console.log("unmount:Pop");
+
+
+  //对申请好友进行操作
+  bypassApply = (apply_name, apply_id, e) => {
+    const { username, number_id } = this.state
+    const type = e.target.innerText == "通过" ? "addFriend" : ""
+    console.log(type);
+    operate_apply({ username, number_id, apply_id, apply_name, type }).then((result) => {
+      if (result.status == 200) {
+        Toast.success(result.msg)
+        this.getPreFriendsList()
+      }
+    })
   }
 
   handleSubmit = (values) => {
@@ -48,13 +82,11 @@ export default class index extends Component {
         Toast.info(result.msg)
       else {
         this.setState({
-          // searchList: [...this.state.searchList, result.data]
-          searchList: [...this.state.searchList, result.data]
+          searchList: [result.data, ...this.state.searchList]
         })
       }
       this.setState({ searchLoading: false })
     })
-    // Toast.info('表单已提交');
   }
 
   render() {
@@ -121,11 +153,10 @@ export default class index extends Component {
                   }
                   extra={
                     <ButtonGroup
+                      onClick={(e) => this.sendApply(item.username, item.number_id)}
                       theme="borderless">
                       <Button
-
-                      >添加</Button>
-                      <Button>通过</Button>
+                      >发送申请</Button>
                     </ButtonGroup >
                   }
                 />
@@ -145,7 +176,7 @@ export default class index extends Component {
                   header={<Avatar size='small' src={item.userPhoto}></Avatar>}
                   main={
                     <div>
-                      <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>示例标题</span>
+                      <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>{item.username}</span>
                       <p
                         style={{
                           color: 'var(--semi-color-text-2)',
@@ -156,7 +187,7 @@ export default class index extends Component {
                           textOverflow: 'ellipsis',
                         }}
                       >
-                        Semi D维护语adsdadsadsad
+                        {item.signaturePerson}
                       </p>
                     </div>
                   }
@@ -164,8 +195,10 @@ export default class index extends Component {
                     <ButtonGroup
                       theme="borderless">
                       <Button
+                        onClick={(e) => this.bypassApply(item.username, item.number_id, e)}
                       >通过</Button>
                       <Button
+                        onClick={(e) => this.bypassApply(item.username, item.number_id, e)}
                         type="danger"
                       >拒绝</Button>
                     </ButtonGroup >
@@ -179,3 +212,12 @@ export default class index extends Component {
     );
   }
 }
+
+export default connect(
+  (state) => ({
+    friendslist: state.friends_lists
+  }),
+  {
+    getFriendsLists: friends_list_action
+  }
+)(index)

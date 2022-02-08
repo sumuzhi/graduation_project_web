@@ -92,7 +92,7 @@ class index extends Component {
   render() {
     return (
       <>
-        {this.props.show ? <AddFriends show={this.props.show} changeModel={this.props.changeModel} /> : ''}
+        {this.props.show ? <AddFriends userInfo={this.props.userInfo} show={this.props.show} changeModel={this.props.changeModel} /> : ''}
         <div style={{ height: 74 }}>
           <Dropdown
             clickToHide={true}

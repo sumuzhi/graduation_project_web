@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import Login from './containers/Login'
 import Enroll from './containers/Enroll'
-// import './socket/test'
+import './socket/test'
 
 ReactDOM.render(
   <BrowserRouter>

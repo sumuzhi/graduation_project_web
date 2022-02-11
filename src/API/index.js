@@ -18,3 +18,15 @@ export const operate_apply = values => axios.post(`${BASE_URL}/bypassApply`, val
 
 //发送添加好友申请
 export const applyToFriend = values => axios.post(`${BASE_URL}/apply_friend`, values)
+
+//删除好友--双向删除
+export const deleteFriend = values => axios.post(`${BASE_URL}/delete_friend`, values)
+
+//得到conversaions列表
+export const getConversaionsList = values => axios.get(`${BASE_URL}/conversations/${values}`)
+
+//得到每个好友的消息---根据会话id去发送
+export const getMessages = values => axios.get(`${BASE_URL}/messages/${values}`)
+
+//发送消息-- 会话id  senderId   content
+export const sendMessages = values => axios.post(`${BASE_URL}/create_messages`, values)

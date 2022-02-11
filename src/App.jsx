@@ -21,9 +21,8 @@ class App extends Component {
             </Col>
 
             <Col span={18}>
-              <Talk />
+              {JSON.stringify(this.props.current_talk_messages) !== '[]' && (<Talk />)}
             </Col>
-
           </Row>
         </div>
       </>
@@ -32,6 +31,9 @@ class App extends Component {
 }
 
 export default connect(
-  state => ({ userInfo: state.userInfo }),
+  state => ({
+    userInfo: state.userInfo,
+    current_talk_messages: state.current_talk_messages
+  }),
   {}
 )(App)

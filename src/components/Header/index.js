@@ -48,12 +48,6 @@ class index extends Component {
     this.props.cancellationToken()
   }
 
-  change = () => {
-    this.setState({
-      visible: this.state.visible
-    })
-  }
-
   changePlacement = e => {
     this.setState({
       placement: e.target.value
@@ -93,7 +87,7 @@ class index extends Component {
     return (
       <>
         {this.props.show ? <AddFriends userInfo={this.props.userInfo} show={this.props.show} changeModel={this.props.changeModel} /> : ''}
-        <div style={{ height: 74 }}>
+        <div style={{ height: 74, minWidth: 350 }}>
           <Dropdown
             clickToHide={true}
             trigger={'click'}
@@ -121,7 +115,7 @@ class index extends Component {
             data={this.state.data}
             prefix={<IconSearch />}
             size="large"
-            style={{ width: '270px', marginTop: "-10px", marginLeft: "10px" }}
+            style={{width:260, marginTop: "-10px", marginLeft: "10px" }}
             renderSelectedItem={option => option.email}
             renderItem={this.renderOption}
             onSearch={this.search.bind(this)}

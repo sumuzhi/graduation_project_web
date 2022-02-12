@@ -6,7 +6,7 @@ import { Toast } from '@douyinfe/semi-ui';
 
 //自定义axios实列添加拦截器
 const instance = axios.create({
-  timeout: 4000
+  // timeout: 4000
 });
 
 // 添加请求拦截器
@@ -42,12 +42,12 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error) => {
-    if (error.response.status === 401) {  //当token过期后进行重新登录操作
+ /*    if (error.response.status === 401) {  //当token过期后进行重新登录操作
       // store.dispatch(createDeleteUserInfoAction())
       Toast.error("身份过期,请重新登录", 1)
     } else {
       Toast.error(error.message)
-    }
+    } */
     // 对响应错误做点什么
     return Promise.reject(error);
   });

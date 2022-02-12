@@ -16,11 +16,11 @@ class index extends Component {
     conversation_friends_list: [],//利用会话中的id拿到friends的信息
     active: 0,
     loading: true,
+    arriveMessages: '',
   }
 
   // 点击卡片，更改样式
   messageClick = async (item) => {
-    console.log(item);
     this.props.setCurrentTalk(item)
     this.setState({ active: item.number_id })
     let currentTalkConversation = this.state.conversationList.filter((c) => {
@@ -28,24 +28,23 @@ class index extends Component {
     })
     this.props.setCurrentTalk({ currentTalkConversation, item })
     let aaa = await getMessages(currentTalkConversation[0].conversation_id)
-    console.log(aaa);
     this.props.getCurrentMessages(aaa)
   }
 
   getConversation_from_server = async () => {
     const id = this.props.userInfo.number_id
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     let result = await getConversaionsList(id)
     if (result.status == 200) {
       const { data } = result
-      this.setState({conversationList:data})
+      this.setState({ conversationList: data })
       data.map((conversation) => {
         let id_list = conversation.members.filter((c) => c !== id)
         this.setState({
           conversation_friends_id: [...this.state.conversation_friends_id, ...id_list]
-        }, () => {
-          this.showMessage_friend()
         })
       })
+      this.showMessage_friend()
     }
   }
 
@@ -61,7 +60,12 @@ class index extends Component {
     })
   }
 
+
   componentDidMount() {
+    console.log("did mount======");
+    this.setState({
+      arriveMessages: ' '
+    })
     this.getConversation_from_server()
   }
 
@@ -112,10 +116,11 @@ export default connect(
   state => ({
     userInfo: state.userInfo,
     reHeight: state.reHeight,
-    friends_lists: state.friends_lists
+    friends_lists: state.friends_lists,
+    socket_io: state.socket_io
   }),
   {
     setCurrentTalk: current_talk_action,
-    getCurrentMessages: current_messages_action
+    getCurrentMessages: current_messages_action,
   }
 )(index)

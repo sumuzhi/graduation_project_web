@@ -5,12 +5,14 @@ import moment from 'moment'
 import { IconUserCardVideo, IconUserCardPhone, IconSend, IconMicrophone, IconList, IconLive, IconSetting } from '@douyinfe/semi-icons';
 import { deleteFriend, getFriendsList, getMessages, sendMessages } from '../../API/index'
 import { friends_list_action } from '../../redux/actions/friend_list_action';
-import { socket_send_action } from '../../redux/actions/socket_sendmsg_action'
+// import { socket_send_action } from '../../redux/actions/socket_sendmsg_action'
 import { push_send_action } from '../../redux/actions/current_messages_action'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 class index extends Component {
+
+  ref1 = React.createRef()  //控制滚动
 
   state = {
     height: 30,
@@ -56,19 +58,20 @@ class index extends Component {
 
   //点击发送消息
   sendMessage = async () => {
-    console.log(this.state.text);
+    // console.log(this.state.text);
+    const r_id = this.props.currentTalk.item.number_id
     const c_id = this.props.currentTalk.currentTalkConversation[0].conversation_id
     const s_id = this.props.hostInfo.number_id
-    const data = { content: this.state.text, conversation_id: c_id, sender: s_id }
+    const data = { content: this.state.text, conversation_id: c_id, sender: s_id, receiver: r_id }
     const create_time = new Date().getTime()
-    console.log(data);
     this.props.push_message({ ...data, create_time })
-    let result = await sendMessages(data)
-    console.log(result);
-  }
-
-  setText = (e) => {
-    this.setState({ text: e })
+    this.props.socket_io.emit("sendMessage", { ...data, create_time })
+    this.setState({
+      text: ''
+    })
+    let result = await sendMessages(data)  //保存信息到数据库中
+    // console.log(result);
+ 
   }
 
   getMessageForConversaionId = async () => {
@@ -78,14 +81,38 @@ class index extends Component {
     })
   }
 
+  //在输入框按下回车
+  enterKey = (e) => {
+    if (e.which == 13) {
+      e.preventDefault();//☆阻止元素发生默认行为.阻止enter键回车换行.☆☆最重要一步
+      // e.stopPropagation();//阻止事件冒泡
+      // e.target.value = ""
+      this.sendMessage()
+
+    }
+  }
+
   componentDidMount() {
     console.log("talk mount==========");
     this.setState({
       messageList: [...this.props.current_talk_messages]
     }, () => {
-      console.log(this.state.messageList);
-
+      this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
     })
+  }
+
+  componentDidUpdate(preProps, preState) {
+    if (preState.messageList != this.state.messageList) {
+      this.props.socket_io.on("receiveMessage", (data) => {
+        console.log(data);
+        if (this.props.currentTalk.item.number_id == data.sender)
+          this.props.push_message(data)
+      })
+      console.log("==========");
+    }
+    if (preProps.current_talk_messages != this.props.current_talk_messages) {
+      this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+    }
   }
 
   componentWillUnmount() {
@@ -134,34 +161,35 @@ class index extends Component {
           >
             <div className="position-relative ">
               <div className="chat-messages p-4 lightscrollbar" style={{ height: this.props.screenHeight - 120 - this.state.height }}>
-                {current_talk_messages.map(item => (
-                  item.sender === hostInfo.number_id ?
-                    (
-                      <div className="chat-message-right pb-4" key={item._id}>
-                        <div>
-                          <img src={hostInfo.userPhotoImg} className="rounded-circle mr-1" alt="Chris Wood" width="40" height="40" />
-                          <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("HH:mm:ss")}</div>
+                <div ref={this.ref1}>
+                  {current_talk_messages.map(item => (
+                    item.sender === hostInfo.number_id ?
+                      (
+                        <div className="chat-message-right pb-4" key={item._id}>
+                          <div>
+                            <img src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
+                            <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
+                          </div>
+                          <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                            <div className="font-weight-bold mb-1">{hostInfo.username}</div>
+                            {item.content}
+                          </div>
                         </div>
-                        <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                          <div className="font-weight-bold mb-1">{hostInfo.username}</div>
-                          {item.content}
+                      ) :
+                      (
+                        <div className="chat-message-left pb-4" key={item._id}>
+                          <div className='mr-1'>
+                            <img src={currentTalk.item.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
+                            <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
+                          </div>
+                          <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                            <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
+                            {item.content}
+                          </div>
                         </div>
-                      </div>
-                    ) :
-                    (
-                      <div className="chat-message-left pb-4" key={item._id}>
-                        <div>
-                          <img src={currentTalk.item.userPhoto} className="rounded-circle mr-1" alt="Chris Wood" width="40" height="40" />
-                          <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("HH:mm:ss")}</div>
-                        </div>
-                        <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                          <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
-                          {item.content}
-                        </div>
-                      </div>
-                    )
-                ))}
-
+                      )
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -171,7 +199,9 @@ class index extends Component {
                   <Col span={21}>
                     <TextArea autosize
                       showClear
-                      onChange={(e) => { this.setText(e) }}
+                      value={this.state.text}
+                      onEnterPress={(e) => { this.enterKey(e) }}
+                      onChange={(e) => { this.setState({ text: e }) }}
                       onResize={this.reSettingHeight}
                       rows={1} placeholder="Type your message" />
                   </Col>
@@ -196,10 +226,10 @@ export default connect(
     currentTalk: state.current_talk,
     hostInfo: state.userInfo,
     current_talk_messages: state.current_talk_messages,
+    socket_io: state.socket_io
   }),
   {
     getFriendsLists: friends_list_action,
-    setId: socket_send_action,
     push_message: push_send_action
   }
 )(index)

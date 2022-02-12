@@ -14,5 +14,5 @@ export default combineReducers({
   friends_lists: friends_list_reducer, //朋友列表
   current_talk: current_talk_friend_reducer,//当前对话的朋友
   current_talk_messages: current_talk_messages_reducer, //当前对话的消息
-  socket: socket_reducer
+  socket_io: socket_reducer
 })

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import { io } from 'socket.io-client'
 import { Toast, Tabs, TabPane } from '@douyinfe/semi-ui';
 
 import { resize_heightAction } from '../../redux/actions/height_resize'
 import { friends_list_action } from '../../redux/actions/friend_list_action'
+import { connect_socket_action } from '../../redux/actions/login_action'
 import { getFriendsList } from '../../API'
 import './index.css'
 import Messages from '../../components/Messages'
@@ -30,16 +31,21 @@ class index extends Component {
       })
   }
 
+  //连接socket
+  connectsocket = () => {
+    const socket_io = io('ws://localhost:3000',
+      { query: { id: this.props.userInfo.number_id } })
+    this.props.connect_socket(socket_io)
+  }
+
   componentDidMount() {
     Toast.success("Welcome: " + this.props.userInfo.username + " !")
     document.documentElement.style.overflow = 'hidden';
     window.addEventListener("resize", this.handleHeight)
     this.sendForList()
+    this.connectsocket()
   }
 
-  componentWillUnmount() {
-    window.removeEventListener("resize", this.handleHeight)
-  }
 
   render() {
     return (
@@ -72,10 +78,11 @@ export default connect(
   (state) => ({
     screenHeight: state.reHeight,
     userInfo: state.userInfo,
-    friends_lists: state.friends_lists
+    friends_lists: state.friends_lists,
   }),
   {
     changeHeight: resize_heightAction,
-    setFriendList: friends_list_action
+    setFriendList: friends_list_action,
+    connect_socket: connect_socket_action
   }
 )(index)

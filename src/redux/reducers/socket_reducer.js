@@ -1,10 +1,8 @@
-import io from 'socket.io-client'
-import { SENDMESSAGE } from '../action_types'
-let number_id = localStorage.getItem('number_id')
+import { CONNECTSOCKET } from '../action_types'
 
-const socket = io('ws://localhost:3000',
-  { query: { id: number_id } })
-
-export default function socket_reducer(preState = socket, action) {
+export default function socket_reducer(preState = {}, action) {
+  const { type, data } = action
+  if (type === CONNECTSOCKET)
+    return data
   return preState
 }

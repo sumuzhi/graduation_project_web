@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { List, Avatar, Spin} from '@douyinfe/semi-ui';
+import { List, Avatar, Spin } from '@douyinfe/semi-ui';
 import { friends_list_action } from '../../redux/actions/friend_list_action'
 import './index.css'
 import { getFriendsList } from '../../API/index'
@@ -40,7 +40,7 @@ class index extends Component {
     return (
       <div className="lightscrollbar"
         onMouseEnter={this.activeScroll}
-        style={{ height: this.props.screenHeight - 100, overflow: 'auto', padding: 10, minWidth: 300 }}>
+        style={{ height: (this.props.screenHeight) * 1 - 100, overflow: 'auto', padding: 10, minWidth: 300 }}>
         <List
           dataSource={this.props.friendslist}
           renderItem={item => (
@@ -76,6 +76,7 @@ class index extends Component {
 export default connect(
   (state) => ({
     userInfo: state.userInfo,
+    screenHeight: state.reHeight,
     friendslist: state.friends_lists,
   }),
   {

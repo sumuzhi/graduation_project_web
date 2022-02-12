@@ -1,13 +1,16 @@
-import { DELETE_USER_INFO, SAVE_USER_INFO } from "../action_types";
+import { DELETE_USER_INFO, SAVE_USER_INFO, CONNECTSOCKET } from "../action_types";
 
 export const saveUserInfoAction = (value) => {
   const { username, number_id, userPhotoBase64 } = value
   localStorage.setItem('username', username)
   // localStorage.setItem('token', value.token)
   localStorage.setItem('number_id', number_id)
-  // localStorage.setItem('isLogin', true)
   localStorage.setItem('userPhotoImg', userPhotoBase64)
   return { type: SAVE_USER_INFO, data: value }
+}
+
+export const connect_socket_action = (value) => {
+  return { type: CONNECTSOCKET, data: value }
 }
 
 export const DeleteUserInfoAction = () => {

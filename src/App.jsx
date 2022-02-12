@@ -9,11 +9,11 @@ import Talk from './containers/Talk'
 class App extends Component {
 
   render() {
+    const isLogin = this.props.userInfo.isLogin
+    if (!isLogin)
+      return <Navigate to="/login" replace={true} />
     return (
       <>
-        {!this.props.userInfo.isLogin && (
-          <Navigate to="/login" replace={true} />
-        )}
         <div>
           <Row>
             <Col span={6}>

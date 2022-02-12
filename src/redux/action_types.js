@@ -12,9 +12,9 @@ export const SAVE_FRIENDS_LIST = 'save_friends_list'
 export const SAVE_CURRENT_TALK_FRIEND = 'save_current_talk_friend'
 
 //发送socket信息
-export const SENDMESSAGE ='send_message'
+export const CONNECTSOCKET = 'connect_socket'
 
 //发送socket信息
-export const GETMESSAGES ='get_messages'
+export const GETMESSAGES = 'get_messages'
 
 export const PUSHMESSAGE = 'push_message'

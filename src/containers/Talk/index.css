@@ -77,33 +77,53 @@
   width: 5px;
 }
 .lightscrollbar:hover::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background   : #ededed;
-  border-radius: 10px;
-  }
-  .icon span{
-    margin:0 5px;
-    font-size: 28px;
-  }
-  .icon{
-    margin-left: 3px;
-  }
-  .paddingSetting{
-    padding: 16px 10px !important;
-  }
+/*滚动条里面轨道*/
+box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
+background   : #ededed;
+border-radius: 10px;
+}
+.icon span{
+  margin:0 5px;
+  font-size: 28px;
+}
+.icon{
+  margin-left: 3px;
+}
+.paddingSetting{
+  padding: 16px 10px !important;
+}
 /* talk头部的图标样式 */
-  .headerIcon span{
-    /* margin: 0 10px; */
-    font-size: 28px;
-    padding:10px 10px;
-  }
-  .headerIcon span:hover{
-    cursor: pointer;
-    background-color: rgb(230, 227, 227);
-    border-radius: 50%;
-  }
+.headerIcon span{
+  /* margin: 0 10px; */
+  font-size: 28px;
+  padding:10px 10px;
+}
+.headerIcon span:hover{
+  cursor: pointer;
+  background-color: rgb(230, 227, 227);
+  border-radius: 50%;
+}
 
   .m10{
     margin: 0 10px;
   }
+
+.voiceModal{
+  line-height: 50px;
+  padding-left: 20px;
+  height: 50px;
+  width: 100px;
+  /* background-color: #f00; */
+  /* border: ; */
+  border-radius: 50px;
+}
+
+.voicefontSize{
+  font-size: 25px;
+}
+.dlb{
+  display: inline-block;
+}
+.bg-light{
+  background-color: #f2eef2!important;
+}

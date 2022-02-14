@@ -18,3 +18,6 @@ export const CONNECTSOCKET = 'connect_socket'
 export const GETMESSAGES = 'get_messages'
 
 export const PUSHMESSAGE = 'push_message'
+
+//退出时断开io
+export const DISCONNECTON = 'disconnection'

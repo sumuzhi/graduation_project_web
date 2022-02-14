@@ -13,8 +13,8 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
 
-    const { token } = store.getState().userInfo
-    if (token) config.headers.Authorization = 'sumuzhi_' + token
+    // const { token } = store.getState().userInfo
+    // if (token) config.headers.Authorization = 'sumuzhi_' + token
 
     // 在发送请求之前做些什么
     /**
@@ -22,11 +22,11 @@ instance.interceptors.request.use(
      * 服务器接收到的编码格式为urlencoding
      * 在此可以利用axios的拦截器将参数进行格式的转化
      * */
-    if (config.method.toLowerCase() === 'post') {
-      if (config.data instanceof Object) {
-        config.data = qs.stringify(config.data)
-      }
-    }
+    // if (config.method.toLowerCase() === 'post') {
+    //   if (config.data instanceof Object) {
+    //     // config.data = qs.stringify(config.data)
+    //   }
+    // }
     // console.log(config)
     return config;
   },

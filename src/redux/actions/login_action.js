@@ -1,4 +1,4 @@
-import { DELETE_USER_INFO, SAVE_USER_INFO, CONNECTSOCKET } from "../action_types";
+import { DELETE_USER_INFO, SAVE_USER_INFO, CONNECTSOCKET, DISCONNECTON } from "../action_types";
 
 export const saveUserInfoAction = (value) => {
   const { username, number_id, userPhotoBase64 } = value
@@ -11,6 +11,10 @@ export const saveUserInfoAction = (value) => {
 
 export const connect_socket_action = (value) => {
   return { type: CONNECTSOCKET, data: value }
+}
+
+export const disconnect_socket_action = (value) => {
+  return { type: DISCONNECTON, data: value }
 }
 
 export const DeleteUserInfoAction = () => {

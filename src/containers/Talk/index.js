@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Toast, Dropdown, TextArea } from '@douyinfe/semi-ui';
+import { Row, Col, Toast, Dropdown, TextArea, Popover } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { IconUserCardVideo, IconUserCardPhone, IconSend, IconMicrophone, IconList, IconLive, IconSetting } from '@douyinfe/semi-icons';
+import { IconUserCardVideo, IconUserCardPhone, IconSend, IconWifi, IconList, IconSonicStroked, IconSetting } from '@douyinfe/semi-icons';
 import { deleteFriend, getFriendsList, getMessages, sendMessages } from '../../API/index'
 import { friends_list_action } from '../../redux/actions/friend_list_action';
-// import { socket_send_action } from '../../redux/actions/socket_sendmsg_action'
 import { push_send_action } from '../../redux/actions/current_messages_action'
-
+import Voice from '../../components/Voice'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 class index extends Component {
@@ -17,17 +16,15 @@ class index extends Component {
   state = {
     height: 30,
     messageList: [],
-    text: ''
+    text: '',
   }
+
+
 
 
   reSettingHeight = ({ height }) => {
     console.log(height);
     this.setState({ height })
-  }
-
-  toolbar = (e) => {
-    // console.log(this.props.currentTalk);
   }
 
   //删除后更新friendList
@@ -38,6 +35,7 @@ class index extends Component {
         this.props.getFriendsLists(result.data)
     })
   }
+
   //查看资料
   checkItem = () => {
 
@@ -71,7 +69,7 @@ class index extends Component {
     })
     let result = await sendMessages(data)  //保存信息到数据库中
     // console.log(result);
- 
+
   }
 
   getMessageForConversaionId = async () => {
@@ -92,6 +90,36 @@ class index extends Component {
     }
   }
 
+  toArrayBuffer = (buf) => {
+    var ab = new ArrayBuffer(buf.length);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i < buf.length; ++i) {
+      view[i] = buf[i];
+    }
+    return ab;
+  }
+
+
+  //点击音频播放
+  playRecorder = async (item) => {
+    console.log(item);
+    var AudioContext = window.AudioContext || window.webkitAudioContext
+    var ctx = new AudioContext()
+    var audioData = item.blob ? (item.blob.size !== undefined ? await item.blob.arrayBuffer() : item.blob) : this.toArrayBuffer(item.recorder.data)
+    ctx.decodeAudioData(
+      audioData,
+      function (buffer) {
+        var sourceNode = ctx.createBufferSource()
+        sourceNode.buffer = buffer
+        sourceNode.connect(ctx.destination)
+        sourceNode.start(0)
+      },
+      function () {
+        // 错误处理
+      }
+    )
+  }
+
   componentDidMount() {
     console.log("talk mount==========");
     this.setState({
@@ -108,7 +136,6 @@ class index extends Component {
         if (this.props.currentTalk.item.number_id == data.sender)
           this.props.push_message(data)
       })
-      console.log("==========");
     }
     if (preProps.current_talk_messages != this.props.current_talk_messages) {
       this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -172,7 +199,10 @@ class index extends Component {
                           </div>
                           <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                             <div className="font-weight-bold mb-1">{hostInfo.username}</div>
-                            {item.content}
+                            {/* {item.content} */}
+                            {item.isRecorder ? <IconWifi rotate={270}
+                              onClick={() => { this.playRecorder(item) }}
+                              className='voicefontSize' /> : item.content}
                           </div>
                         </div>
                       ) :
@@ -184,7 +214,9 @@ class index extends Component {
                           </div>
                           <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                             <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
-                            {item.content}
+                            {item.isRecorder ? <IconWifi rotate={90}
+                              onClick={() => { this.playRecorder(item) }}
+                              className='voicefontSize  ' /> : item.content}
                           </div>
                         </div>
                       )
@@ -206,9 +238,11 @@ class index extends Component {
                       rows={1} placeholder="Type your message" />
                   </Col>
                   <Col span={3} style={{ width: "100%" }}>
-                    <div className="icon" style={{ position: "absolute", bottom: 0, right: 0 }}>
-                      <IconSend size="extra-large" onClick={this.sendMessage} />
-                      <IconMicrophone size="extra-large" />
+                    <div className="icon" style={{ display: "flex", position: "absolute", bottom: 0, right: 0 }}>
+                      <div>
+                        <IconSend size="extra-large" onClick={this.sendMessage} />
+                      </div>
+                      <Voice />
                     </div>
                   </Col>
                 </Row>

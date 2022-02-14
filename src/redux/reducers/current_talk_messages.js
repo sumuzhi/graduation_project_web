@@ -7,7 +7,6 @@ export default function current_talk_messages_reducer(preState = [], action) {
     case GETMESSAGES:
       return [...data]
     case PUSHMESSAGE:
-      console.log(data);
       return [...preState,data]
     default:
       return preState

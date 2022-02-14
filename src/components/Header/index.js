@@ -3,7 +3,7 @@ import { Toast, Dropdown, AutoComplete, Avatar, } from '@douyinfe/semi-ui';
 import { IconStar, IconMenu, IconUserGroup, IconSearch } from '@douyinfe/semi-icons';
 import { connect } from "react-redux";
 import AddFriends from '../AddFriends'
-import { DeleteUserInfoAction } from '../../redux/actions/login_action'
+import { DeleteUserInfoAction, disconnect_socket_action } from '../../redux/actions/login_action'
 
 import './index.css'
 
@@ -46,6 +46,7 @@ class index extends Component {
 
   rightClick(value) {
     this.props.cancellationToken()
+    this.props.disconnect_io(this.props.socket_io)
   }
 
   changePlacement = e => {
@@ -115,7 +116,7 @@ class index extends Component {
             data={this.state.data}
             prefix={<IconSearch />}
             size="large"
-            style={{width:260, marginTop: "-10px", marginLeft: "10px" }}
+            style={{ width: 260, marginTop: "-10px", marginLeft: "10px" }}
             renderSelectedItem={option => option.email}
             renderItem={this.renderOption}
             onSearch={this.search.bind(this)}
@@ -128,8 +129,12 @@ class index extends Component {
 }
 
 export default connect(
-  (state) => ({ userInfo: state.userInfo }),
+  (state) => ({
+    userInfo: state.userInfo,
+    socket_io: state.socket_io
+  }),
   {
-    cancellationToken: DeleteUserInfoAction
+    cancellationToken: DeleteUserInfoAction,
+    disconnect_io: disconnect_socket_action
   }
 )(index)

@@ -31,3 +31,13 @@ export const getMessages = values => axios.get(`${BASE_URL}/messages/${values}`)
 
 //发送消息-- 会话id  senderId   content
 export const sendMessages = values => axios.post(`${BASE_URL}/create_messages`, values)
+
+//发送语音消息
+export const sendRecorderMessage = values => axios({
+  method: "post",
+  url: `${BASE_URL}/message_recorder`,
+  data: values,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+})

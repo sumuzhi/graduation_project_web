@@ -1,4 +1,4 @@
-import { RESIZE } from '../action_types'
+import {RESIZE } from '../action_types'
 let initState = window.innerHeight
 
 

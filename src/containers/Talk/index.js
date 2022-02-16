@@ -19,9 +19,6 @@ class index extends Component {
     text: '',
   }
 
-
-
-
   reSettingHeight = ({ height }) => {
     console.log(height);
     this.setState({ height })
@@ -200,9 +197,14 @@ class index extends Component {
                           <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                             <div className="font-weight-bold mb-1">{hostInfo.username}</div>
                             {/* {item.content} */}
-                            {item.isRecorder ? <IconWifi rotate={270}
-                              onClick={() => { this.playRecorder(item) }}
-                              className='voicefontSize' /> : item.content}
+                            {item.isRecorder ? (
+                              <div>
+                                <IconWifi rotate={270}
+                                  onClick={() => { this.playRecorder(item) }}
+                                  className='voicefontSize' />
+                                <span className='d-inline-block ml-2'>{Math.round(item.duration)}''</span>
+                              </div>
+                            ) : item.content}
                           </div>
                         </div>
                       ) :
@@ -214,9 +216,14 @@ class index extends Component {
                           </div>
                           <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
                             <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
-                            {item.isRecorder ? <IconWifi rotate={90}
-                              onClick={() => { this.playRecorder(item) }}
-                              className='voicefontSize  ' /> : item.content}
+                            {item.isRecorder ? (
+                              <div>
+                                <IconWifi rotate={90}
+                                  onClick={() => { this.playRecorder(item) }}
+                                  className='voicefontSize  ' />
+                                <span className='d-inline-block ml-2'>{Math.round(item.duration)}''</span>
+                              </div>
+                            ) : item.content}
                           </div>
                         </div>
                       )

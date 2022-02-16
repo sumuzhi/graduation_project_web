@@ -19,7 +19,7 @@ class index extends Component {
   }
 
   //包装blob数据,并发哦是那个请求
-  getMp3Blob = async (blob) => {
+  getMp3Blob = async (blob, duration) => {
     console.log(this.props);
     const fd = new FormData();
     const sender = this.props.hostInfo.number_id
@@ -33,8 +33,9 @@ class index extends Component {
     fd.append("conversation_id", conversation_id);
     fd.append("content", content);
     fd.append("isRecorder", isRecorder);
+    fd.append("duration", duration);
 
-    const data = { sender, conversation_id, content, receiver: this.props.currentTalk.item.number_id, isRecorder,  blob }
+    const data = { sender, duration, conversation_id, content, receiver: this.props.currentTalk.item.number_id, isRecorder, blob }
     this.props.socket_io.emit("sendMessage", { ...data, create_time })
     this.props.push_message({ ...data, create_time })
     const aaa = await sendRecorderMessage(fd)
@@ -45,7 +46,7 @@ class index extends Component {
   getRecorder = () => {
     this.recorder = new Recorder({
       sampleBits: 8,                 // 采样位数，支持 8 或 16，默认是16
-      sampleRate: 16000,              // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
+      sampleRate: 24000,              // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
       numChannels: 1,                 // 声道，支持 1 或 2， 默认是1
     });
   }
@@ -54,7 +55,9 @@ class index extends Component {
   //停止录音后的回调
   stopRecorder = async () => {
     const recorder = this.recorder.getWAVBlob();
-    this.getMp3Blob(recorder) //将文件打包成dormdata数据格式
+    const duration = this.recorder.duration
+    console.log(duration);
+    this.getMp3Blob(recorder, duration) //将文件打包成dormdata数据格式
     this.recorder.destroy().then(() => {
       this.recorder = null
     });

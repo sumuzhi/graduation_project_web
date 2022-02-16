@@ -122,7 +122,11 @@ class index extends Component {
     this.setState({
       messageList: [...this.props.current_talk_messages]
     }, () => {
-      this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+      console.log(this.ref1.current);
+      if (this.ref1.current !== null) {
+        this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
+
+      }
     })
   }
 
@@ -145,120 +149,128 @@ class index extends Component {
 
   render() {
     const { hostInfo, current_talk_messages, currentTalk } = this.props
-    return (
-      <div >
-        <Row>
-          <div className="py-2 px-4 d-none d-lg-block">
-            <div className="d-flex align-items-center py-1">
-              <div className="position-relative" >
-                <img src={this.props.currentTalk.item.userPhoto} style={{ objectFit: "cover" }} className="rounded-circle mr-1" width="50" height="50" />
-              </div>
-              <div className="flex-grow-1 pl-3">
-                <strong>{this.props.currentTalk.item.username}</strong>
-                <div className="text-muted small">{this.props.currentTalk.item.signaturePerson}</div>
-              </div>
-              <div className='headerIcon'>
-                <IconUserCardPhone
-                />
-                <IconUserCardVideo />
-                <Dropdown
-                  clickToHide={true}
-                  trigger={'click'}
-                  position={'bottomLeft'}
-                  render={
-                    <Dropdown.Menu>
-                      <Dropdown.Item onClick={this.checkItem}>查看资料</Dropdown.Item>
-                      <Dropdown.Item onClick={this.deleteFriend}>删除好友</Dropdown.Item>
-                    </Dropdown.Menu>
-                  }
-                >
-                  <IconList
-                    onClick={this.toolbar} />
-                </Dropdown>
-              </div>
-            </div>
-          </div>
-          <Col span={4}></Col>
+    if (currentTalk.item === undefined)
+      return (
+        <div className="text-center setbg" style={{ height: this.props.screenHeight - 120 - this.state.height, lineHeight: this.props.screenHeight - 120 - this.state.height + "px" }}
+        >enjoy your time.
+        </div>
 
-          <Col span={14}
-            style={{ minWidth: 380 }}
-          >
-            <div className="position-relative ">
-              <div className="chat-messages p-4 lightscrollbar" style={{ height: this.props.screenHeight - 120 - this.state.height }}>
-                <div ref={this.ref1}>
-                  {current_talk_messages.map(item => (
-                    item.sender === hostInfo.number_id ?
-                      (
-                        <div className="chat-message-right pb-4" key={item._id}>
-                          <div>
-                            <img src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
-                            <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
-                          </div>
-                          <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                            <div className="font-weight-bold mb-1">{hostInfo.username}</div>
-                            {/* {item.content} */}
-                            {item.isRecorder ? (
-                              <div>
-                                <IconWifi rotate={270}
-                                  onClick={() => { this.playRecorder(item) }}
-                                  className='voicefontSize' />
-                                <span className='d-inline-block ml-2'>{Math.round(item.duration)}''</span>
-                              </div>
-                            ) : item.content}
-                          </div>
-                        </div>
-                      ) :
-                      (
-                        <div className="chat-message-left pb-4" key={item._id}>
-                          <div className='mr-1'>
-                            <img src={currentTalk.item.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
-                            <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
-                          </div>
-                          <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                            <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
-                            {item.isRecorder ? (
-                              <div>
-                                <IconWifi rotate={90}
-                                  onClick={() => { this.playRecorder(item) }}
-                                  className='voicefontSize  ' />
-                                <span className='d-inline-block ml-2'>{Math.round(item.duration)}''</span>
-                              </div>
-                            ) : item.content}
-                          </div>
-                        </div>
-                      )
-                  ))}
+      )
+    else
+      return (
+        <div >
+          <Row>
+            <div className="py-2 px-4 d-none d-lg-block">
+              <div className="d-flex align-items-center py-1">
+                <div className="position-relative" >
+                  <img src={this.props.currentTalk.item.userPhoto} style={{ objectFit: "cover" }} className="rounded-circle mr-1" width="50" height="50" />
+                </div>
+                <div className="flex-grow-1 pl-3">
+                  <strong>{this.props.currentTalk.item.username}</strong>
+                  <div className="text-muted small">{this.props.currentTalk.item.signaturePerson}</div>
+                </div>
+                <div className='headerIcon'>
+                  <IconUserCardPhone
+                  />
+                  <IconUserCardVideo />
+                  <Dropdown
+                    clickToHide={true}
+                    trigger={'click'}
+                    position={'bottomLeft'}
+                    render={
+                      <Dropdown.Menu>
+                        <Dropdown.Item onClick={this.checkItem}>查看资料</Dropdown.Item>
+                        <Dropdown.Item onClick={this.deleteFriend}>删除好友</Dropdown.Item>
+                      </Dropdown.Menu>
+                    }
+                  >
+                    <IconList
+                      onClick={this.toolbar} />
+                  </Dropdown>
                 </div>
               </div>
             </div>
+            <Col span={4}></Col>
 
-            <div className="flex-grow-0 py-3 px-4 paddingSetting">
-              <div>
-                <Row>
-                  <Col span={21}>
-                    <TextArea autosize
-                      showClear
-                      value={this.state.text}
-                      onEnterPress={(e) => { this.enterKey(e) }}
-                      onChange={(e) => { this.setState({ text: e }) }}
-                      onResize={this.reSettingHeight}
-                      rows={1} placeholder="Type your message" />
-                  </Col>
-                  <Col span={3} style={{ width: "100%" }}>
-                    <div className="icon" style={{ display: "flex", position: "absolute", bottom: 0, right: 0 }}>
-                      <div>
-                        <IconSend size="extra-large" onClick={this.sendMessage} />
-                      </div>
-                      <Voice />
-                    </div>
-                  </Col>
-                </Row>
+            <Col span={14}
+              style={{ minWidth: 380 }}
+            >
+              <div className="position-relative ">
+                <div className="chat-messages p-4 lightscrollbar" style={{ height: this.props.screenHeight - 120 - this.state.height }}>
+                  <div ref={this.ref1}>
+                    {current_talk_messages.map(item => (
+                      item.sender === hostInfo.number_id ?
+                        (
+                          <div className="chat-message-right pb-4" key={item._id}>
+                            <div>
+                              <img src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
+                            </div>
+                            <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                              <div className="font-weight-bold mb-1">{hostInfo.username}</div>
+                              {/* {item.content} */}
+                              {item.isRecorder ? (
+                                <div>
+                                  <IconWifi rotate={270}
+                                    onClick={() => { this.playRecorder(item) }}
+                                    className='voicefontSize' />
+                                  <span className='d-inline-block ml-2'>{Math.round(item.duration)}''</span>
+                                </div>
+                              ) : item.content}
+                            </div>
+                          </div>
+                        ) :
+                        (
+                          <div className="chat-message-left pb-4" key={item._id}>
+                            <div className='mr-1'>
+                              <img src={currentTalk.item.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
+                            </div>
+                            <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                              <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
+                              {item.isRecorder ? (
+                                <div>
+                                  <IconWifi rotate={90}
+                                    onClick={() => { this.playRecorder(item) }}
+                                    className='voicefontSize  ' />
+                                  <span className='d-inline-block ml-2'>{Math.round(item.duration)}''</span>
+                                </div>
+                              ) : item.content}
+                            </div>
+                          </div>
+                        )
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
-    );
+
+              <div className="flex-grow-0 py-3 px-4 paddingSetting">
+                <div>
+                  <Row>
+                    <Col span={21}>
+                      <TextArea autosize
+                        showClear
+                        value={this.state.text}
+                        onEnterPress={(e) => { this.enterKey(e) }}
+                        onChange={(e) => { this.setState({ text: e }) }}
+                        onResize={this.reSettingHeight}
+                        rows={1} placeholder="Type your message" />
+                    </Col>
+                    <Col span={3} style={{ width: "100%" }}>
+                      <div className="icon" style={{ display: "flex", position: "absolute", bottom: 0, right: 0 }}>
+                        <div>
+                          <IconSend size="extra-large" onClick={this.sendMessage} />
+                        </div>
+                        <Voice />
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      );
   }
 }
 export default connect(

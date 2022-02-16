@@ -21,7 +21,8 @@ class App extends Component {
             </Col>
 
             <Col span={18}>
-              {JSON.stringify(this.props.current_talk_messages) !== '[]' && (<Talk />)}
+              {/* {JSON.stringify(this.props.current_talk_messages) !== '[]' && (<Talk />)} */}
+              {  (<Talk />)}
             </Col>
           </Row>
         </div>

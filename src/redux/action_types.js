@@ -21,3 +21,8 @@ export const PUSHMESSAGE = 'push_message'
 
 //退出时断开io
 export const DISCONNECTON = 'disconnection'
+
+//注销用户时删除redux中的全部数据
+export const DELETEFRIENDSLISTS ='delete_friends_list'
+export const DELETECURRENTTALK = 'current_talk'
+export const DELETECURRENTTALKMESSAGES = 'delete_current_talk_messages'

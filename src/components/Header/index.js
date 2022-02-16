@@ -4,6 +4,9 @@ import { IconStar, IconMenu, IconUserGroup, IconSearch } from '@douyinfe/semi-ic
 import { connect } from "react-redux";
 import AddFriends from '../AddFriends'
 import { DeleteUserInfoAction, disconnect_socket_action } from '../../redux/actions/login_action'
+import { delete_friends_list_action } from "../../redux/actions/friend_list_action";
+import { delete_current_talk_action } from "../../redux/actions/current_talk_action";
+import { delete_current_talk_messages_action } from "../../redux/actions/current_messages_action";
 
 import './index.css'
 
@@ -47,6 +50,9 @@ class index extends Component {
   rightClick(value) {
     this.props.cancellationToken()
     this.props.disconnect_io(this.props.socket_io)
+    this.props.delete_friends_list()
+    this.props.delete_current_talk()
+    this.props.delete_current_talk_messages()
   }
 
   changePlacement = e => {
@@ -135,6 +141,9 @@ export default connect(
   }),
   {
     cancellationToken: DeleteUserInfoAction,
-    disconnect_io: disconnect_socket_action
+    disconnect_io: disconnect_socket_action,
+    delete_friends_list: delete_friends_list_action,
+    delete_current_talk: delete_current_talk_action,
+    delete_current_talk_messages:delete_current_talk_messages_action
   }
 )(index)

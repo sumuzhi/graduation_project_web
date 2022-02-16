@@ -1,4 +1,4 @@
-import { GETMESSAGES, PUSHMESSAGE } from '../action_types'
+import { DELETECURRENTTALKMESSAGES, GETMESSAGES, PUSHMESSAGE } from '../action_types'
 
 
 export default function current_talk_messages_reducer(preState = [], action) {
@@ -7,7 +7,9 @@ export default function current_talk_messages_reducer(preState = [], action) {
     case GETMESSAGES:
       return [...data]
     case PUSHMESSAGE:
-      return [...preState,data]
+      return [...preState, data]
+    case DELETECURRENTTALKMESSAGES:
+      return []
     default:
       return preState
   }

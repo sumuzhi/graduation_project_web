@@ -43,7 +43,7 @@ class index extends Component {
   //点击删除选线后
   deleteFriend = (e) => {
     const { username: host_name, number_id: host_id } = this.props.hostInfo
-    const { username: apply_name, number_id: apply_id } = this.props.currentTalk
+    const { username: apply_name, number_id: apply_id } = this.props.current_talk
     deleteFriend({ host_name, host_id, apply_id, apply_name })
       .then((result) => {
         if (result.status == 200) {
@@ -56,8 +56,8 @@ class index extends Component {
   //点击发送消息
   sendMessage = async () => {
     // console.log(this.state.text);
-    const r_id = this.props.currentTalk.item.number_id
-    const c_id = this.props.currentTalk.currentTalkConversation[0].conversation_id
+    const r_id = this.props.current_talk.number_id
+    const c_id = this.props.current_talk_conversation.conversation_id
     const s_id = this.props.hostInfo.number_id
     const data = { content: this.state.text, conversation_id: c_id, sender: s_id, receiver: r_id }
     const create_time = new Date().getTime()
@@ -72,7 +72,7 @@ class index extends Component {
   }
 
   getMessageForConversaionId = async () => {
-    let messages = await getMessages(this.props.currentTalk.currentTalkConversation[0].conversation_id)
+    let messages = await getMessages(this.props.current_talk_conversation.conversation_id)
     this.setState({
       messageList: [...messages]
     })
@@ -82,8 +82,6 @@ class index extends Component {
   enterKey = (e) => {
     if (e.which == 13) {
       e.preventDefault();//☆阻止元素发生默认行为.阻止enter键回车换行.☆☆最重要一步
-      // e.stopPropagation();//阻止事件冒泡
-      // e.target.value = ""
       this.sendMessage()
 
     }
@@ -125,10 +123,8 @@ class index extends Component {
     this.setState({
       messageList: [...this.props.current_talk_messages]
     }, () => {
-      console.log(this.ref1.current);
       if (this.ref1.current !== null) {
         this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
-
       }
     })
   }
@@ -137,7 +133,7 @@ class index extends Component {
     if (preState.messageList != this.state.messageList) {
       this.props.socket_io.on("receiveMessage", (data) => {
         console.log(data);
-        if (this.props.currentTalk.item.number_id == data.sender)
+        if (this.props.current_talk.number_id == data.sender)
           this.props.push_message(data)
       })
     }
@@ -152,8 +148,8 @@ class index extends Component {
   }
 
   render() {
-    const { hostInfo, current_talk_messages, currentTalk } = this.props
-    if (currentTalk.item === undefined)
+    const { hostInfo, current_talk_messages, current_talk } = this.props
+    if (current_talk.username === undefined)
       return (
         <Tip screenHeight={this.props.screenHeight} />
       )
@@ -165,11 +161,11 @@ class index extends Component {
             <div className="py-2 px-4 d-none d-lg-block">
               <div className="d-flex align-items-center py-1">
                 <div className="position-relative" >
-                  <img src={this.props.currentTalk.item.userPhoto} style={{ objectFit: "cover" }} className="rounded-circle mr-1" width="50" height="50" />
+                  <img src={this.props.current_talk.userPhoto} style={{ objectFit: "cover" }} className="rounded-circle mr-1" width="50" height="50" />
                 </div>
                 <div className="flex-grow-1 pl-3">
-                  <strong>{this.props.currentTalk.item.username}</strong>
-                  <div className="text-muted small">{this.props.currentTalk.item.signaturePerson}</div>
+                  <strong>{this.props.current_talk.username}</strong>
+                  <div className="text-muted small">{this.props.current_talk.signaturePerson}</div>
                 </div>
                 <div className='headerIcon'>
                   <IconUserCardPhone
@@ -193,7 +189,7 @@ class index extends Component {
                 </div>
               </div>
             </div>
-            <Col span={4}></Col>
+            <Col span={2}></Col>
 
             <Col span={14}
               style={{ minWidth: 380 }}
@@ -226,11 +222,11 @@ class index extends Component {
                         (
                           <div className="chat-message-left pb-4" key={item._id}>
                             <div className='mr-1'>
-                              <img src={currentTalk.item.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <img src={current_talk.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
                               <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
                             </div>
                             <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
-                              <div className="font-weight-bold mb-1">{currentTalk.item.username}</div>
+                              <div className="font-weight-bold mb-1">{current_talk.username}</div>
                               {item.isRecorder ? (
                                 <div>
                                   <IconWifi rotate={90}
@@ -271,7 +267,7 @@ class index extends Component {
                 </div>
               </div>
             </Col>
-            <Col span={6}>
+            <Col span={8}>
               <Upload />
             </Col>
           </Row>
@@ -282,10 +278,11 @@ class index extends Component {
 export default connect(
   (state) => ({
     screenHeight: state.reHeight,
-    currentTalk: state.current_talk,
+    current_talk: state.current_talk,
     hostInfo: state.userInfo,
     current_talk_messages: state.current_talk_messages,
-    socket_io: state.socket_io
+    socket_io: state.socket_io,
+    current_talk_conversation: state.current_talk_conversation
   }),
   {
     getFriendsLists: friends_list_action,

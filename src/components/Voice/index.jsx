@@ -23,7 +23,7 @@ class index extends Component {
     console.log(this.props);
     const fd = new FormData();
     const sender = this.props.hostInfo.number_id
-    const { conversation_id } = this.props.currentTalk.currentTalkConversation[0]
+    const { conversation_id } = this.props.current_talk_conversation
     const content = "recorder"
     const create_time = new Date().getTime()
     const isRecorder = true
@@ -132,7 +132,8 @@ export default connect(
     currentTalk: state.current_talk,
     hostInfo: state.userInfo,
     current_talk_messages: state.current_talk_messages,
-    socket_io: state.socket_io
+    socket_io: state.socket_io,
+    current_talk_conversation: state.current_talk_conversation
   }),
   {
     getFriendsLists: friends_list_action,

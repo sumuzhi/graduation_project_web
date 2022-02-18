@@ -34,7 +34,6 @@ class App extends Component {
             </Col>
 
             <Col span={18}>
-              {/* {this.state.message_flag ?  : ''} */}
               {this.state.right_flag ? <Talk /> : <ShowPerson changeRightCoponent={this.changeRightCoponent} />}
             </Col>
           </Row>

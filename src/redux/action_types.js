@@ -32,3 +32,6 @@ export const SETCURRENTFRIENDINFO = 'set_current_friend_info'
 
 //改变tab栏的key
 export const CHANGETABACTIVE ='change_tab_active'
+
+//当前对话的信息
+export const SAVE_CURRENT_TALK_CONVERSATION = 'save_current_talk_conversaion'

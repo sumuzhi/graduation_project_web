@@ -1072,38 +1072,38 @@
   resolved "https://registry.nlark.com/@csstools/normalize.css/download/@csstools/normalize.css-12.0.0.tgz#a9583a75c3f150667771f30b60d9f059473e62c4"
   integrity sha1-qVg6dcPxUGZ3cfMLYNnwWUc+YsQ=
 
-"@douyinfe/semi-animation-react@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-animation-react/download/@douyinfe/semi-animation-react-2.3.1.tgz#96f3cc427411567cdab85dc260aa5bc72258b1bd"
-  integrity sha512-7rXD60qnRbWQK9et1LfHmoDaL8icavO+gozAMVNYvIsJqz4UPsJdvqAz2tJ0aZRoYzWi39V5mxFnXdzzbcAzMQ==
+"@douyinfe/semi-animation-react@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-animation-react/-/semi-animation-react-2.5.0-beta.0.tgz#6fbe64ca3c5df2df2be6d3637390a81f8215766e"
+  integrity sha512-wLrKXIp22BifWuUAW90mTYEY/5+8HY5fp+2io1f416Sck5/AJqD8e4+m2LC5UZIKs/Zptancwo7IS071LAOdYw==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
-    "@douyinfe/semi-animation" "2.3.1"
-    "@douyinfe/semi-animation-styled" "2.3.1"
+    "@douyinfe/semi-animation" "2.5.0-beta.0"
+    "@douyinfe/semi-animation-styled" "2.5.0-beta.0"
     classnames "^2.2.6"
 
-"@douyinfe/semi-animation-styled@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-animation-styled/download/@douyinfe/semi-animation-styled-2.3.1.tgz#ec86256c381eda0356b3e6dbf6cf63fabb6a5ee3"
-  integrity sha512-++3ngSanf1NroWQoZ8ssDk55Wz1Ib6G7m+Ee/RmOnL5VzvhyhLnkgjZoaWz6oIHbk0TQ764+GoBzfF+ZsYtvrQ==
+"@douyinfe/semi-animation-styled@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-animation-styled/-/semi-animation-styled-2.5.0-beta.0.tgz#8fdf5027a8379646ae222fc1d6f0e68cca5613cd"
+  integrity sha512-V6Q6qPBvly+8JhNrENWQY6w2fMaTTWgwaLkatT/0UipNv6MNIiwB9vjTqIZKwtNyCz+wZKqMG+YG5z3kq5E9hg==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
 
-"@douyinfe/semi-animation@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-animation/download/@douyinfe/semi-animation-2.3.1.tgz#df021f397ca2546162b74c2d085ea4293d928755"
-  integrity sha512-sDd9hSTGCvSb6JPls0XgrLXPMRjjjn1bWbW6Y1XJcdge/KPEyL7zYo216yq89YVUsbuhwtfzfcKCfK+aIE7F5g==
+"@douyinfe/semi-animation@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-animation/-/semi-animation-2.5.0-beta.0.tgz#cf2834ef13923ab6bad42cc0fcb3fe282d83598f"
+  integrity sha512-zFmshJb9WNqfkeZim8NQ0smPrVBLvNfSmqpPQzD4kze5+OT7PJVL5gCu1wQdqeOxNBw7YkvsvSS96nCiiHea3A==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
     bezier-easing "^2.1.0"
 
-"@douyinfe/semi-foundation@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-foundation/download/@douyinfe/semi-foundation-2.3.1.tgz#4d6d46350f392b0d247d85764d50c955d3ca9656"
-  integrity sha512-0EgaAnDFsesSSDHhyw1OfE/pgRKACvHUs3QIcax5V32t3bJ3q6C7BISHxHFxmP9oBTlYTZ5kZJCcJ+ECweYs2Q==
+"@douyinfe/semi-foundation@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-foundation/-/semi-foundation-2.5.0-beta.0.tgz#eb653da491e0672e1204d8b71ef89d00557719be"
+  integrity sha512-XE6JSiQXhF0lSMHaIHKBIuoEuL5D7Q66wDPemyT15URqxCl8E2mQ0SLqrL6heiAkyrc7rx0rMJ3IBO73Wjm0qg==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
-    "@douyinfe/semi-animation" "2.3.1"
+    "@douyinfe/semi-animation" "2.5.0-beta.0"
     async-validator "^3.5.0"
     classnames "^2.2.6"
     date-fns "^2.9.0"
@@ -1112,39 +1112,40 @@
     memoize-one "^5.2.1"
     scroll-into-view-if-needed "^2.2.24"
 
-"@douyinfe/semi-icons@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-icons/download/@douyinfe/semi-icons-2.3.1.tgz#81b16b6d63903f298b31218e8c00c88fb78b0719"
-  integrity sha512-7WHegh5ESbgbLDJwx/H5Oa+ChXPUlVRw/cfkIUc0z9JdCVH7+L660w83mimLmvrSYOhR3YYB7nVUcrLfiuqG9A==
+"@douyinfe/semi-icons@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-icons/-/semi-icons-2.5.0-beta.0.tgz#274c35abb4aea8a2aaaa7f7a1c31ab8d0650c1e2"
+  integrity sha512-aYemZy0l03ryMOFLsYwaSw2A3raXiOD2bfAoimLFl0yzbGPYfYe0T8JVj7D6MKtnkPUzKpExQEOhr66+OTmbbQ==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
     classnames "^2.2.6"
 
-"@douyinfe/semi-illustrations@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-illustrations/download/@douyinfe/semi-illustrations-2.3.1.tgz#8991f5d6db6b9437a372a73ad2b93684b93db0ed"
-  integrity sha512-7cBQBVJneKEfnv7aMHDmED23oJ+3/vSnqXriZK2keQOyzOSrjt3AQ12wBsjIgNgcWIwg2FI+m03jM1LxSOgo3A==
+"@douyinfe/semi-illustrations@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-illustrations/-/semi-illustrations-2.5.0-beta.0.tgz#af6b82bfd78a0c64c49bf1921be552a1d5931832"
+  integrity sha512-tVYBY/aZJYwBV+0IWXj+xGPLrgVBcJRVVjVJVHZlSWGJejZIourPO64FnmB2r+J97SsGv/HuRxc5ZwsC1LhLwA==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
 
-"@douyinfe/semi-theme-default@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-theme-default/download/@douyinfe/semi-theme-default-2.3.1.tgz#2f41f609bfcc58582c5551fb1de4cd983f81452f"
-  integrity sha512-od/AjepcaxcQSkcC2YViUH9A1tL7Ve2QiFkd0Z2DG76zPG1K4yzMI5mFmB1sKQ3uVRzO5f1YOp7k0zub094NuQ==
+"@douyinfe/semi-theme-default@2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-theme-default/-/semi-theme-default-2.5.0-beta.0.tgz#51a2d7c8dd6054831b11e2c8ffb8552638ae81f7"
+  integrity sha512-KZXAuBi5jV9WjMIn9eNxBtuqaZwUJPp+o0Isv6wntI4hQPVs6FSfncVlXDld7weEHuR06b9pBGvqHXMFYX0Gkw==
   dependencies:
     glob "^7.1.6"
 
-"@douyinfe/semi-ui@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmmirror.com/@douyinfe/semi-ui/download/@douyinfe/semi-ui-2.3.1.tgz#13cf65f66494012b7ba36fd02baab0c3bebd83df"
-  integrity sha512-2RlhndHE4J82QSMnioerWMDzlRe+Qe3kJKQo0/6U+LkY2gP9B2edMiTG5QiqQNJ8YeAwOCkKbuJPbgr/B2VdXA==
+"@douyinfe/semi-ui@^2.5.0-beta.0":
+  version "2.5.0-beta.0"
+  resolved "https://registry.npmmirror.com/@douyinfe/semi-ui/-/semi-ui-2.5.0-beta.0.tgz#55f8a9546952a393786dba1092791c4c84e2800c"
+  integrity sha512-eAkqBmYkvo93E5jDKwFF6Xh86nTZpKBHvNznf+A2VkkjHIGrELI5XXHrZSMiI2LNIfaZL7WDwGZ1vCteoiQHBg==
   dependencies:
     "@babel/runtime-corejs3" "^7.15.4"
-    "@douyinfe/semi-animation-react" "2.3.1"
-    "@douyinfe/semi-foundation" "2.3.1"
-    "@douyinfe/semi-icons" "2.3.1"
-    "@douyinfe/semi-illustrations" "2.3.1"
-    "@douyinfe/semi-theme-default" "2.3.1"
+    "@douyinfe/semi-animation" "2.5.0-beta.0"
+    "@douyinfe/semi-animation-react" "2.5.0-beta.0"
+    "@douyinfe/semi-foundation" "2.5.0-beta.0"
+    "@douyinfe/semi-icons" "2.5.0-beta.0"
+    "@douyinfe/semi-illustrations" "2.5.0-beta.0"
+    "@douyinfe/semi-theme-default" "2.5.0-beta.0"
     "@types/react-window" "^1.8.2"
     async-validator "^3.5.0"
     classnames "^2.2.6"

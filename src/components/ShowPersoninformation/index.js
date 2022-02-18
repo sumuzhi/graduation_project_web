@@ -3,25 +3,38 @@ import { Button, Toast, Col, Row } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux';
 
 import './index.css'
-import { createConversation_api } from '../../API'
+import { createConversation_api, getMessages } from '../../API'
 import { change_tab_action_action } from '../../redux/actions/activeKey_action';
 import { current_talk_action } from '../../redux/actions/current_talk_action';
+import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
+import { current_messages_action } from '../../redux/actions/current_messages_action'
+
 
 class index extends Component {
 
 
 
+  //点击发送消息
   createConversation = async () => {
-    const data = this.props.current_friend
-    console.log(data);
     this.props.changeActiveKey({ key: "1" })
     const sender = this.props.hostInfo.number_id
     const receiver = this.props.current_friend.number_id
-    console.log(this.props.current_friend);
     const result = await createConversation_api({ sender, receiver })
-    this.props.changeRightCoponent(true)
-    const { currentTalk } = this.props
-    this.props.setCurrentTalk({ ...currentTalk, item: data })
+    this.props.setCurrentTalk(this.props.current_friend)
+    if (result.status === 201) {
+      const { find_conversaion } = result
+      this.props.changeRightCoponent(true)
+      this.props.save_current_conversaion(find_conversaion[0])
+      const aaa = await getMessages(find_conversaion[0].conversation_id)
+      this.props.set_current_talk_message(aaa)
+    }
+    if (result.status === 200) {
+      const { conversation_id } = result.data
+      this.props.save_current_conversaion(result.data)
+      const aaa = await getMessages(conversation_id)
+      this.props.set_current_talk_message(aaa)
+    }
+
   }
 
   render() {
@@ -56,6 +69,8 @@ export default connect(
   }),
   {
     changeActiveKey: change_tab_action_action,
-    setCurrentTalk: current_talk_action
+    setCurrentTalk: current_talk_action,
+    save_current_conversaion: current_talk_conversation_action,
+    set_current_talk_message: current_messages_action
   }
 )(index)

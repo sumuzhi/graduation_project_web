@@ -5,6 +5,7 @@ import { List, Avatar, Spin } from '@douyinfe/semi-ui';
 import { getConversaionsList, getMessages } from '../../API'
 import { current_talk_action } from '../../redux/actions/current_talk_action'
 import { current_messages_action } from '../../redux/actions/current_messages_action'
+import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
 
 import './index.css'
 
@@ -27,7 +28,9 @@ class index extends Component {
     let currentTalkConversation = this.state.conversationList.filter((c) => {
       return c.members.includes(item.number_id)
     })
-    this.props.setCurrentTalk({ currentTalkConversation, item })
+    this.props.setCurrentTalk(item)
+    this.props.saveCurrentConversaion(currentTalkConversation[0])
+
     let aaa = await getMessages(currentTalkConversation[0].conversation_id)
     this.props.getCurrentMessages(aaa)
   }
@@ -116,10 +119,12 @@ export default connect(
     userInfo: state.userInfo,
     reHeight: state.reHeight,
     friends_lists: state.friends_lists,
-    socket_io: state.socket_io
+    socket_io: state.socket_io,
+    current_conversation: state.current_talk_conversation
   }),
   {
     setCurrentTalk: current_talk_action,
     getCurrentMessages: current_messages_action,
+    saveCurrentConversaion: current_talk_conversation_action
   }
 )(index)

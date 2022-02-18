@@ -43,4 +43,7 @@ export const sendRecorderMessage = values => axios({
 })
 
 //创建会话
-export const createConversation_api = values =>axios.post(`${BASE_URL}/create_conversation`, values)
+export const createConversation_api = values => axios.post(`${BASE_URL}/create_conversation`, values)
+
+//获取文件列表
+export const getFileList = values => axios.get(`${BASE_URL}/get_file_list?conversation_id=` + values)

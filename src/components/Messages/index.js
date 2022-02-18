@@ -21,6 +21,7 @@ class index extends Component {
 
   // 点击卡片，更改样式
   messageClick = async (item) => {
+    this.props.changeRightCoponent(true)  //用来切换页面又组件的展示
     this.props.setCurrentTalk(item)
     this.setState({ active: item.number_id })
     let currentTalkConversation = this.state.conversationList.filter((c) => {
@@ -33,7 +34,6 @@ class index extends Component {
 
   getConversation_from_server = async () => {
     const id = this.props.userInfo.number_id
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     let result = await getConversaionsList(id)
     if (result.status == 200) {
       const { data } = result
@@ -50,7 +50,6 @@ class index extends Component {
 
   showMessage_friend = () => {
     const { friends_lists } = this.props
-    console.log(friends_lists);
     let aaa = friends_lists.filter((c) => {
       return this.state.conversation_friends_id.includes(c.number_id)
     })

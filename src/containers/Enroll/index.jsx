@@ -39,7 +39,6 @@ class index extends Component {
     const { msg, status } = e.response
     if (status == 200) {
       Toast.success(msg)
-      // window.location.href = "http://localhost:3000/login"
     }
     else Toast.error(msg);
   }

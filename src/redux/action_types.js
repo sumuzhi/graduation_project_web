@@ -26,3 +26,9 @@ export const DISCONNECTON = 'disconnection'
 export const DELETEFRIENDSLISTS ='delete_friends_list'
 export const DELETECURRENTTALK = 'current_talk'
 export const DELETECURRENTTALKMESSAGES = 'delete_current_talk_messages'
+
+//当前选中的friend
+export const SETCURRENTFRIENDINFO = 'set_current_friend_info'
+
+//改变tab栏的key
+export const CHANGETABACTIVE ='change_tab_active'

@@ -15,8 +15,8 @@ export default class index extends Component {
   render() {
     return (
       <>
-        <Header show={this.state.showModal} changeModel={this.changeModel}></Header>
-        <Tab_list></Tab_list>
+        <Header  show={this.state.showModal} changeModel={this.changeModel}></Header>
+        <Tab_list changeRightCoponent={this.props.changeRightCoponent}></Tab_list>
       </>
     );
   }

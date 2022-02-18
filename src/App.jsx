@@ -5,11 +5,24 @@ import { Navigate } from "react-router-dom";
 
 import Nav from './components/Nav'
 import Talk from './containers/Talk'
+import ShowPerson from './components/ShowPersoninformation'
 
 class App extends Component {
 
+
+  state = {
+    right_flag: true,//true为talk组件,false为联系人的组件
+  }
+
+  changeRightCoponent = (e) => {
+    this.setState({
+      right_flag: e,
+    })
+  }
+
   render() {
     const isLogin = this.props.userInfo.isLogin
+
     if (!isLogin)
       return <Navigate to="/login" replace={true} />
     return (
@@ -17,12 +30,12 @@ class App extends Component {
         <div>
           <Row>
             <Col span={6}>
-              <Nav />
+              <Nav changeRightCoponent={this.changeRightCoponent} />
             </Col>
 
             <Col span={18}>
-              {/* {JSON.stringify(this.props.current_talk_messages) !== '[]' && (<Talk />)} */}
-              {  (<Talk />)}
+              {/* {this.state.message_flag ?  : ''} */}
+              {this.state.right_flag ? <Talk /> : <ShowPerson changeRightCoponent={this.changeRightCoponent} />}
             </Col>
           </Row>
         </div>
@@ -34,7 +47,7 @@ class App extends Component {
 export default connect(
   state => ({
     userInfo: state.userInfo,
-    current_talk_messages: state.current_talk_messages
+    current_talk_messages: state.current_talk_messages,
   }),
   {}
 )(App)

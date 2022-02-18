@@ -41,3 +41,6 @@ export const sendRecorderMessage = values => axios({
     'Content-Type': 'application/x-www-form-urlencoded'
   }
 })
+
+//创建会话
+export const createConversation_api = values =>axios.post(`${BASE_URL}/create_conversation`, values)

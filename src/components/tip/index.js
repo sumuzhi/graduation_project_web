@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 
+import './index.css'
+
 export default class index extends Component {
   render() {
-    return <div>dsad</div>;
+    const { screenHeight } = this.props
+    console.log(screenHeight);
+    return (
+      <div className="text-center setbg"
+      style={{ height: screenHeight, lineHeight: screenHeight - 120 + "px" }}
+      >enjoy your time.
+      </div>
+    )
   }
 }

@@ -50,18 +50,19 @@ class index extends Component {
   render() {
     return (
       <Tabs style={{ minWidth: 350 }}
+        defaultActiveKey={this.props.activeKey.key}
       >
         <TabPane
           tab=" 消息列表 "
           itemKey="1"
         >
-          {this.props.friends_lists.length !== 0 && (<Messages />)}
+          {this.props.friends_lists.length !== 0 && (<Messages changeRightCoponent={this.props.changeRightCoponent} />)}
         </TabPane>
         <TabPane
           tab="联系人"
           itemKey="2"
         >
-          <Contacts />
+          <Contacts changeRightCoponent={this.props.changeRightCoponent} />
         </TabPane>
         <TabPane
           tab="设置"
@@ -69,7 +70,6 @@ class index extends Component {
         >
         </TabPane>
       </Tabs>
-
     );
   }
 }
@@ -79,6 +79,7 @@ export default connect(
     screenHeight: state.reHeight,
     userInfo: state.userInfo,
     friends_lists: state.friends_lists,
+    activeKey: state.activeKey
   }),
   {
     changeHeight: resize_heightAction,

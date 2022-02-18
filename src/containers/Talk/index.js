@@ -7,6 +7,8 @@ import { deleteFriend, getFriendsList, getMessages, sendMessages } from '../../A
 import { friends_list_action } from '../../redux/actions/friend_list_action';
 import { push_send_action } from '../../redux/actions/current_messages_action'
 import Voice from '../../components/Voice'
+import Upload from '../../components/Upload'
+import Tip from '../../components/Tip'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 class index extends Component {
@@ -87,6 +89,7 @@ class index extends Component {
     }
   }
 
+  //Array---to----ArrayBuffer
   toArrayBuffer = (buf) => {
     var ab = new ArrayBuffer(buf.length);
     var view = new Uint8Array(ab);
@@ -143,6 +146,7 @@ class index extends Component {
     }
   }
 
+
   componentWillUnmount() {
     console.log("umpont-----------");
   }
@@ -151,15 +155,13 @@ class index extends Component {
     const { hostInfo, current_talk_messages, currentTalk } = this.props
     if (currentTalk.item === undefined)
       return (
-        <div className="text-center setbg" style={{ height: this.props.screenHeight - 120 - this.state.height, lineHeight: this.props.screenHeight - 120 - this.state.height + "px" }}
-        >enjoy your time.
-        </div>
-
+        <Tip screenHeight={this.props.screenHeight} />
       )
     else
       return (
         <div >
           <Row>
+            {this.state.isUpload ? <Upload changeUploadState={this.changeUploadState} /> : ''}
             <div className="py-2 px-4 d-none d-lg-block">
               <div className="d-flex align-items-center py-1">
                 <div className="position-relative" >
@@ -180,6 +182,7 @@ class index extends Component {
                     render={
                       <Dropdown.Menu>
                         <Dropdown.Item onClick={this.checkItem}>查看资料</Dropdown.Item>
+                        <Dropdown.Item onClick={this.sendFiles}>发送文件</Dropdown.Item>
                         <Dropdown.Item onClick={this.deleteFriend}>删除好友</Dropdown.Item>
                       </Dropdown.Menu>
                     }
@@ -267,6 +270,9 @@ class index extends Component {
                   </Row>
                 </div>
               </div>
+            </Col>
+            <Col span={6}>
+              <Upload />
             </Col>
           </Row>
         </div>

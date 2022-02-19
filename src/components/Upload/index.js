@@ -1,14 +1,19 @@
-import React, { Component } from 'react'
-import { Upload, List, Avatar, ButtonGroup, Button } from '@douyinfe/semi-ui';
+import React, { Component, createRef } from 'react'
+import { Upload, List, Avatar, Notification, Button } from '@douyinfe/semi-ui';
 
 import { IconDownload, IconDelete, IconEyeOpened } from '@douyinfe/semi-icons';
 
+
 import { connect } from 'react-redux';
-import { getFileList } from '../../API'
+import { getFileList, downloadFiles } from '../../API'
 import './index.css'
 
-
 class index extends Component {
+
+  constructor() {
+    super();
+    this.ref1 = createRef()
+  }
 
   state = {
     data: {},
@@ -28,9 +33,9 @@ class index extends Component {
     if (result.status === 200) {
       console.log(result);
       result.result.map((c) => {
-        let { fieldname: name, size } = c
+        let { fieldname: name, size, mimeType: type, conversation_id, file_id } = c
         size = this.formatBytes(size)
-        const aaa = { name, size }
+        const aaa = { name, size, type, conversation_id, file_id }
         temp_fileList.push(aaa)
       })
       this.setState({
@@ -39,10 +44,50 @@ class index extends Component {
     }
   }
 
+  toArrayBuffer = (buf) => {
+    var ab = new ArrayBuffer(buf.length);
+    var view = new Uint8Array(ab);
+    for (var i = 0; i < buf.length; ++i) {
+      view[i] = buf[i];
+    }
+    return ab;
+  }
+
+
+  download(buff, name) {
+    let url = window.URL.createObjectURL(new Blob([buff], { type: "arraybuffer" }))
+    const link = document.createElement('a');
+    link.style.display = 'none';
+    link.href = url;
+    link.setAttribute('download', name);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+
+  //点击下载图标,进行文件的下载
+  downloadFile = async (fileItem) => {
+    console.log('download=======')
+    Notification.success({ content: "文件正在下载,请勿重复点击",title:"下载提示" })
+    const { file_id } = fileItem
+    const { conversation_id } = this.state.data
+    let result = await downloadFiles({ file_id, conversation_id })
+    if (result.status === 200) {
+      console.log(result);
+      const file_buffer = result.data.file_buffer
+      // console.log(file_buffer.data);
+      const name = result.data.fieldname
+      console.log(name);
+      const aaa = this.toArrayBuffer(file_buffer.data)
+      this.download(aaa, name)
+    }
+  }
+
+
   renderFileOperation = (fileItem) => (
     <div style={{ display: 'flex', columnGap: 8, padding: '0 8px' }}>
-      <Button icon={<IconDownload></IconDownload>} type="tertiary" theme="borderless" size="small"></Button>
-      <Button onClick={e => fileItem.onRemove()} icon={<IconDelete></IconDelete>} type="tertiary" theme="borderless" size="small"></Button>
+      <Button onClick={() => { this.downloadFile(fileItem) }} icon={<IconDownload></IconDownload>} type="tertiary" theme="borderless" size="small"></Button>
     </div>
   )
 
@@ -70,20 +115,34 @@ class index extends Component {
     }
   }
 
-  render() {
 
+  onChange = ({ fileList, currentFile }) => {
+    if (currentFile.status === 'success') {
+      console.log(fileList[fileList.length - 1]);
+      fileList[fileList.length - 1]["file_id"] = fileList[fileList.length - 1].response.file_id
+    }
+    let newFileList = [...fileList]; // spread to get new array
+    this.setState({
+      FileList: newFileList
+    })
+  };
+
+  render() {
     const { hostInfo, current_conversation } = this.props
-    if (hostInfo.number_id == '' && current_conversation.length == 0)
+    const { FileList } = this.state
+    if (hostInfo.number_id == '' && current_conversation.length == 0 && FileList.length === 0)
       return (<div></div>)
     else
       return (
         <div className='lightscrollbar' style={{ height: this.props.reHeight - 100 }}>
-          {current_conversation.conversation_id}
           <Upload
             className='uploadcomponent'
-            multiple
+            // multiple
+            ref={this.ref1}
+            showClear={false}
             renderFileOperation={this.renderFileOperation}
-            fileList={this.state.FileList}
+            onChange={(e) => { this.onChange(e) }}
+            fileList={FileList}
             action="http://localhost:3000/upload_file"
             data={this.state.data}
             maxSize={16384}

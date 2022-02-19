@@ -267,7 +267,8 @@ class index extends Component {
                 </div>
               </div>
             </Col>
-            <Col span={8}>
+            <Col span={1}></Col>
+            <Col span={7}>
               <Upload />
             </Col>
           </Row>

@@ -18,7 +18,7 @@ class index extends Component {
     complete: false
   }
 
-  //包装blob数据,并发哦是那个请求
+  //包装blob数据,并发送请求
   getMp3Blob = async (blob, duration) => {
     console.log(this.props);
     const fd = new FormData();

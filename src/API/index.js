@@ -47,3 +47,6 @@ export const createConversation_api = values => axios.post(`${BASE_URL}/create_c
 
 //获取文件列表
 export const getFileList = values => axios.get(`${BASE_URL}/get_file_list?conversation_id=` + values)
+
+//下载文件
+export const downloadFiles = values => axios.post(`${BASE_URL}/download_file`, values)

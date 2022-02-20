@@ -50,3 +50,6 @@ export const getFileList = values => axios.get(`${BASE_URL}/get_file_list?conver
 
 //下载文件
 export const downloadFiles = values => axios.post(`${BASE_URL}/download_file`, values)
+
+//更新个人信息
+export const updateInfo = values => axios.post(`${BASE_URL}/update_userInfo`, values)

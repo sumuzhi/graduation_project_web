@@ -35,3 +35,6 @@ export const CHANGETABACTIVE ='change_tab_active'
 
 //当前对话的信息
 export const SAVE_CURRENT_TALK_CONVERSATION = 'save_current_talk_conversaion'
+
+//视频组件的展示与否
+export const VIDEOMODALFLAG ='video_modal_flag'

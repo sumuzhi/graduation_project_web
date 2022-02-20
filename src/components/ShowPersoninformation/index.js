@@ -9,8 +9,13 @@ import { current_talk_action } from '../../redux/actions/current_talk_action';
 import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
 import { current_messages_action } from '../../redux/actions/current_messages_action'
 
+import { change_video_modal_flag_action } from '../../redux/actions/video_modal_flag_action'
 
 class index extends Component {
+
+  state = {
+    showVideoModal: false,
+  }
 
 
 
@@ -37,6 +42,17 @@ class index extends Component {
 
   }
 
+
+  callVideo = () => {
+    this.props.change_video_modal_flag(true)
+  }
+
+
+  closeVideoModal = () => {
+    this.setState({ showVideoModal: false })
+  }
+
+
   render() {
     const { current_friend, hostInfo } = this.props
     if (JSON.stringify(current_friend) === "{}" || hostInfo.number_id === '')
@@ -51,8 +67,7 @@ class index extends Component {
               <Button
                 onClick={this.createConversation}
               >发送消息</Button>
-              <Button>语音通话</Button>
-              <Button>视频通话</Button>
+              <Button onClick={this.callVideo}>音视频通话</Button>
             </Col>
             <Col span={4}></Col>
           </Row>
@@ -71,6 +86,7 @@ export default connect(
     changeActiveKey: change_tab_action_action,
     setCurrentTalk: current_talk_action,
     save_current_conversaion: current_talk_conversation_action,
-    set_current_talk_message: current_messages_action
+    set_current_talk_message: current_messages_action,
+    change_video_modal_flag: change_video_modal_flag_action
   }
 )(index)

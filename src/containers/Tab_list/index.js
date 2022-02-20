@@ -46,7 +46,6 @@ class index extends Component {
     this.connectsocket()
   }
 
-
   render() {
     return (
       <Tabs style={{ minWidth: 350 }}
@@ -65,7 +64,7 @@ class index extends Component {
           <Contacts changeRightCoponent={this.props.changeRightCoponent} />
         </TabPane>
         <TabPane
-          tab="设置"
+          tab="文件列表"
           itemKey="3"
         >
         </TabPane>

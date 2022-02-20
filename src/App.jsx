@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import Nav from './components/Nav'
 import Talk from './containers/Talk'
 import ShowPerson from './components/ShowPersoninformation'
+import VideoPlayer from "./components/Video/VideoPlayer";
 
 class App extends Component {
 
@@ -29,6 +30,7 @@ class App extends Component {
       <>
         <div>
           <Row>
+            {this.props.videoModalFlag ? <VideoPlayer /> : ''}
             <Col span={6}>
               <Nav changeRightCoponent={this.changeRightCoponent} />
             </Col>
@@ -47,6 +49,7 @@ export default connect(
   state => ({
     userInfo: state.userInfo,
     current_talk_messages: state.current_talk_messages,
+    videoModalFlag: state.videoModalFlag
   }),
   {}
 )(App)

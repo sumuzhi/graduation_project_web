@@ -9,6 +9,7 @@ import { push_send_action } from '../../redux/actions/current_messages_action'
 import Voice from '../../components/Voice'
 import Upload from '../../components/Upload'
 import Tip from '../../components/Tip'
+import ShowInfomation from '../../components/ShowSelfInfomation/ShowSelfInfomation'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 class index extends Component {
@@ -33,11 +34,6 @@ class index extends Component {
       if (result.status == 200)
         this.props.getFriendsLists(result.data)
     })
-  }
-
-  //查看资料
-  checkItem = () => {
-
   }
 
   //点击删除选线后
@@ -170,15 +166,14 @@ class index extends Component {
                 <div className='headerIcon'>
                   <IconUserCardPhone
                   />
-                  <IconUserCardVideo />
+
                   <Dropdown
                     clickToHide={true}
                     trigger={'click'}
                     position={'bottomLeft'}
                     render={
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={this.checkItem}>查看资料</Dropdown.Item>
-                        <Dropdown.Item onClick={this.sendFiles}>发送文件</Dropdown.Item>
+                        {/* <Dropdown.Item onClick={this.checkItem}> 查看资料</Dropdown.Item> */}
                         <Dropdown.Item onClick={this.deleteFriend}>删除好友</Dropdown.Item>
                       </Dropdown.Menu>
                     }

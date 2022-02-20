@@ -8,51 +8,48 @@ import { delete_friends_list_action } from "../../redux/actions/friend_list_acti
 import { delete_current_talk_action } from "../../redux/actions/current_talk_action";
 import { delete_current_talk_messages_action } from "../../redux/actions/current_messages_action";
 
+import ShowSelfInfomation from '../../components/ShowSelfInfomation/ShowSelfInfomation'
+
 import './index.css'
 
 class index extends Component {
 
-  constructor() {
-    super();
-    this.click = this.click.bind(this);
-    this.mouseEnter = this.mouseEnter.bind(this);
-    this.mouseLeave = this.mouseLeave.bind(this);
-    this.rightClick = this.rightClick.bind(this);
-    this.state = {
-      data: [],
-      color: ['amber', 'indigo', 'cyan'],
-      list: [
-        { name: '夏可漫', email: 'xiakeman@example.com', abbr: 'XK', color: 'amber' },
-        { name: '申悦', email: 'shenyue@example.com', abbr: 'SY', color: 'indigo' },
-        { name: '曲晨一', email: 'quchenyi@example.com', abbr: 'CY', color: 'blue' },
-        { name: '文嘉茂', email: 'wenjiamao@example.com', abbr: 'JM', color: 'cyan' },
-      ],
-      visible: false,
-      placement: "left"
-    };
-  }
+  state = {
+    data: [],
+    color: ['amber', 'indigo', 'cyan'],
+    list: [],
+    visible: false,
+    placement: "left",
+    showSelfFlag: false
+  };
 
   handle = () => {
   }
-  click = (value) => {
+
+  //展示添加好友组件
+  handleAddFriend = (value) => {
     const changeModel = this.props.changeModel
     changeModel()
   }
 
-  mouseEnter(value) {
-    Toast.info({ content: 'Nice to meet you!' });
-  }
 
-  mouseLeave(value) {
-    Toast.info({ content: 'See ya!' });
-  }
-
-  rightClick(value) {
+  //退出登录
+  handleQuit = () => {
     this.props.cancellationToken()
     this.props.disconnect_io(this.props.socket_io)
     this.props.delete_friends_list()
     this.props.delete_current_talk()
     this.props.delete_current_talk_messages()
+  }
+
+  //点击个人信息---可以修改
+  handleSetting = () => {
+    console.log(1);
+    this.setState({ showSelfFlag: true })
+  }
+
+  changeSelfFlag = () => {
+    this.setState({ showSelfFlag: false })
   }
 
   changePlacement = e => {
@@ -93,6 +90,7 @@ class index extends Component {
   render() {
     return (
       <>
+        {this.state.showSelfFlag ? <ShowSelfInfomation userInfo={this.props.userInfo} changeSelfFlag={this.changeSelfFlag} /> : ''}
         {this.props.show ? <AddFriends userInfo={this.props.userInfo} show={this.props.show} changeModel={this.props.changeModel} /> : ''}
         <div style={{ height: 74, minWidth: 350 }}>
           <Dropdown
@@ -101,11 +99,9 @@ class index extends Component {
             position={'bottomLeft'}
             render={
               <Dropdown.Menu>
-                <Dropdown.Item onClick={this.click}>添加好友</Dropdown.Item>
-                <Dropdown.Item onClick={this.mouseEnter}>2: mouse enter</Dropdown.Item>
-                <Dropdown.Item onClick={this.mouseLeave}>3: mouse leave</Dropdown.Item>
-                <Dropdown.Item onClick={this.mouseLeave}>设置</Dropdown.Item>
-                <Dropdown.Item onClick={this.rightClick}>退出登录</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleAddFriend}>添加好友</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleSetting}>个人信息</Dropdown.Item>
+                <Dropdown.Item onClick={this.handleQuit}>退出登录</Dropdown.Item>
               </Dropdown.Menu>
             }
           >
@@ -137,13 +133,14 @@ class index extends Component {
 export default connect(
   (state) => ({
     userInfo: state.userInfo,
-    socket_io: state.socket_io
+    socket_io: state.socket_io,
+    friend_list: state.friendList
   }),
   {
     cancellationToken: DeleteUserInfoAction,
     disconnect_io: disconnect_socket_action,
     delete_friends_list: delete_friends_list_action,
     delete_current_talk: delete_current_talk_action,
-    delete_current_talk_messages:delete_current_talk_messages_action
+    delete_current_talk_messages: delete_current_talk_messages_action
   }
 )(index)

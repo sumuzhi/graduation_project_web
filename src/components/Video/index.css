@@ -1,0 +1,52 @@
+.modal-footbar{
+  justify-content:space-around;
+  display: flex;
+}
+/* 视频展示窗口 */
+.videoPlay{
+  position: relative;
+  height: 400px;
+  width: 700px;
+  margin: 0 auto;
+  background-color: green;
+}
+/* icon的样式 */
+
+.changeSvgSize{
+  padding: 10px;
+  border-radius: 50%;
+  background-color: rgb(72, 149, 236);
+}
+
+.changeSvgSize:hover{
+  cursor: pointer;
+  box-shadow:1px 1px 70px  rgb(72, 149, 236);
+}
+
+.icon-ring{
+  transform:rotate(140deg);
+  background: rgb(255, 72, 72) !important;
+}
+.icon-ring:hover{
+  cursor: pointer;
+  box-shadow:1px 1px 70px  rgb(255, 72, 72);
+}
+/* 小盒子 */
+.smallbox{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  height: 100px;
+  background-color: #ff0;
+}
+
+.VideoTip{
+  text-align: center;
+  background-color: rgb(72, 149, 236);
+  color: #fff;
+  -webkit-user-select: none;  /* 禁止 DIV 中的文本被鼠标选中 */
+  -moz-user-select: none;     /* 禁止 DIV 中的文本被鼠标选中 */
+  -ms-user-select: none;      /* 禁止 DIV 中的文本被鼠标选中 */
+  user-select: none;             /* 禁止 DIV 中的文本被鼠标选中 */
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Toast, Col, Row } from '@douyinfe/semi-ui';
+import { Button, Avatar, Col, Row } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux';
 
 import './index.css'
@@ -17,6 +17,10 @@ class index extends Component {
     showVideoModal: false,
   }
 
+
+  componentDidMount() {
+    console.log(this.props.current_friend);
+  }
 
 
   //点击发送消息
@@ -61,13 +65,33 @@ class index extends Component {
       return (
         <div>
           <Row>
-            <Col span={4}></Col>
-            <Col span={12} className="setBg">
-              {current_friend.username}
-              <Button
-                onClick={this.createConversation}
-              >发送消息</Button>
-              <Button onClick={this.callVideo}>音视频通话</Button>
+            <Col span={5}></Col>
+            <Col span={10} className="setBg">
+              <div className="selfInfomation" >
+                <div className="shadow"></div>
+                <div className="backgroundImg" style={{ backgroundImage: 'url(' + current_friend.userPhoto + ')' }}>
+                </div>
+                <div className="img" >
+                  <Avatar src={current_friend.userPhoto} size="extra-large" style={{ margin: "0 auto" }}>
+                  </Avatar>
+                </div>
+                <div className="bodyText">
+                  <p style={{ fontSize: "16px"}}>用户名</p>
+                  {current_friend.username}
+                  <div className="person">
+                    <p style={{ fontSize: "16px"}}>个性签名</p>
+                    {current_friend.signaturePerson}
+                  </div>
+                </div>
+                <div className="footer">
+                  <Button
+                    style={{ width: "200px", height: "50px", fontSize: "20px" }}
+                    onClick={this.createConversation} >发送消息</Button>
+                  <Button
+                    style={{ width: "200px", height: "50px", fontSize: "20px" }}
+                    onClick={this.callVideo}>音视频通话</Button>
+                </div>
+              </div>
             </Col>
             <Col span={4}></Col>
           </Row>
@@ -80,7 +104,7 @@ export default connect(
   state => ({
     current_friend: state.current_friend,
     hostInfo: state.userInfo,
-    currentTalk: state.current_talk
+    currentTalk: state.current_talk,
   }),
   {
     changeActiveKey: change_tab_action_action,

@@ -31,7 +31,6 @@ class index extends Component {
     let result = await getFileList(this.state.data.conversation_id)
     let temp_fileList = []
     if (result.status === 200) {
-      console.log(result);
       result.result.map((c) => {
         let { fieldname: name, size, mimeType: type, conversation_id, file_id } = c
         size = this.formatBytes(size)

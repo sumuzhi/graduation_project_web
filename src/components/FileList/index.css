@@ -13,20 +13,7 @@
   /* background   : #ededed; */
   border-radius: 10px;
   }
-
-.messageItem:hover{
-  background-color: rgb(240, 240, 240);
-  border-radius: 10px;
-}
-.messageItemActive{
-  background-color: #ff0;
-}
-
-.active{
-  background-color: rgb(189, 231, 122);
-  border-radius: 10px;
-}
-
+  
 .lightscrollbar:hover::-webkit-scrollbar-thumb{
   background-color: skyblue;
   width: 5px;

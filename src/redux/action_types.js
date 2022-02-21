@@ -38,3 +38,12 @@ export const SAVE_CURRENT_TALK_CONVERSATION = 'save_current_talk_conversaion'
 
 //视频组件的展示与否
 export const VIDEOMODALFLAG ='video_modal_flag'
+
+//消息列表
+export const MESSAGELIST = 'message_list'
+
+//添加消息未读
+export const ADDMESSAGEFLAG ='add_message_flag'
+
+//删除消息未读
+export const DELETEMESSAGEFLAG ='delete_message_flag'

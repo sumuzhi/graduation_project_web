@@ -6,6 +6,7 @@ import { getConversaionsList, getMessages } from '../../API'
 import { current_talk_action } from '../../redux/actions/current_talk_action'
 import { current_messages_action } from '../../redux/actions/current_messages_action'
 import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
+import { set_message_list_action, delete_message_list_action } from '../../redux/actions/handle_message_list_action'
 
 import './index.css'
 
@@ -22,6 +23,8 @@ class index extends Component {
 
   // 点击卡片，更改样式
   messageClick = async (item) => {
+    console.log(item);
+    this.props.delete_message_list(item.number_id)
     this.props.changeRightCoponent(true)  //用来切换页面又组件的展示
     this.props.setCurrentTalk(item)
     this.setState({ active: item.number_id })
@@ -30,7 +33,6 @@ class index extends Component {
     })
     this.props.setCurrentTalk(item)
     this.props.saveCurrentConversaion(currentTalkConversation[0])
-
     let aaa = await getMessages(currentTalkConversation[0].conversation_id)
     this.props.getCurrentMessages(aaa)
   }
@@ -39,6 +41,7 @@ class index extends Component {
     const id = this.props.userInfo.number_id
     let result = await getConversaionsList(id)
     if (result.status == 200) {
+      console.log(result.data);
       const { data } = result
       this.setState({ conversationList: data })
       data.map((conversation) => {
@@ -59,6 +62,8 @@ class index extends Component {
     this.setState({
       conversation_friends_list: [...aaa],
       loading: false
+    }, () => {
+      this.props.saveMessageList(this.state.conversation_friends_list)
     })
   }
 
@@ -77,13 +82,15 @@ class index extends Component {
         onMouseEnter={this.activeScroll}
         style={{ height: this.props.reHeight - 100, overflow: 'auto', padding: 10, minWidth: 300 }}>
         <List
-          dataSource={this.state.conversation_friends_list}
+          // dataSource={this.state.conversation_friends_list}
+          dataSource={this.props.message_list}
           renderItem={item => (
             <List.Item
               extra={<Avatar
+                style={{ fontColor: "#fff" }}
                 size='small'
-                color="green"
-              >1
+                color={item.read !== undefined ? 'green' : 'white'}
+              >{item.read !== undefined ? item.read : ''}
               </Avatar>}
               onClick={() => { this.messageClick(item) }}
               className={item.number_id === this.state.active ? "active " : "messageItem"}
@@ -97,7 +104,7 @@ class index extends Component {
                     {item.username}
                   </span>
                   <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                    你好
+                    {item.content}
                   </p>
                 </div>
               }
@@ -120,11 +127,14 @@ export default connect(
     reHeight: state.reHeight,
     friends_lists: state.friends_lists,
     socket_io: state.socket_io,
-    current_conversation: state.current_talk_conversation
+    current_conversation: state.current_talk_conversation,
+    message_list: state.message_list
   }),
   {
     setCurrentTalk: current_talk_action,
     getCurrentMessages: current_messages_action,
-    saveCurrentConversaion: current_talk_conversation_action
+    saveCurrentConversaion: current_talk_conversation_action,
+    saveMessageList: set_message_list_action,
+    delete_message_list: delete_message_list_action
   }
 )(index)

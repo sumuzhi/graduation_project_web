@@ -10,6 +10,7 @@ import { getFriendsList } from '../../API'
 import './index.css'
 import Messages from '../../components/Messages'
 import Contacts from '../../components/Contacts'
+import FileList from '../../components/FileList/FileList'
 
 
 class index extends Component {
@@ -67,6 +68,7 @@ class index extends Component {
           tab="文件列表"
           itemKey="3"
         >
+          {this.props.friends_lists.length !== 0 && (<FileList userInfo={this.props.userInfo} height={this.props.screenHeight} />)}
         </TabPane>
       </Tabs>
     );

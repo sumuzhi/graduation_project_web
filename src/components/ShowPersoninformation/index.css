@@ -2,3 +2,50 @@
   display: flex;
   justify-content: space-around;
 }
+
+.selfInfomation{
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  /* background-color: #f2ccf2; */
+}
+.img{
+  transform: translate(57px, -64px); 
+  width:128px;
+  height:128px;
+  position: absolute;
+  right:50%;
+}
+.backgroundImg{
+  height: 300px;
+  width: 100%;
+  border-radius:10px;
+  background-repeat: no-repeat;  
+  background-size: cover; 
+}
+
+/* 遮盖蹭 */
+.shadow{
+  position: absolute;
+  opacity: 0.4;
+  border-radius:10px;
+  height: 300px;
+  width: 100%;
+  background-color: #000;
+}
+
+.bodyText{
+  margin-top: 10vh;
+  height: 35vh;
+  font-size:25px;
+}
+
+.footer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.person{
+  font-size: 30px;
+  margin-top:30px;
+}

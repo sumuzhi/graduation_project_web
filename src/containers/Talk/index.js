@@ -6,10 +6,10 @@ import { IconUserCardVideo, IconUserCardPhone, IconSend, IconWifi, IconList, Ico
 import { deleteFriend, getFriendsList, getMessages, sendMessages } from '../../API/index'
 import { friends_list_action } from '../../redux/actions/friend_list_action';
 import { push_send_action } from '../../redux/actions/current_messages_action'
+import { update_message_list_action } from '../../redux/actions/handle_message_list_action'
 import Voice from '../../components/Voice'
 import Upload from '../../components/Upload'
 import Tip from '../../components/Tip'
-import ShowInfomation from '../../components/ShowSelfInfomation/ShowSelfInfomation'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 class index extends Component {
@@ -129,8 +129,13 @@ class index extends Component {
     if (preState.messageList != this.state.messageList) {
       this.props.socket_io.on("receiveMessage", (data) => {
         console.log(data);
-        if (this.props.current_talk.number_id == data.sender)
+        console.log(this.props.current_talk.number_id);
+        if (this.props.current_talk.number_id === data.sender)
           this.props.push_message(data)
+        if (this.props.current_talk.number_id !== data.sender) {
+          const { sender, content } = data
+          this.props.set_message_flag({ sender, content })
+        }
       })
     }
     if (preProps.current_talk_messages != this.props.current_talk_messages) {
@@ -164,8 +169,7 @@ class index extends Component {
                   <div className="text-muted small">{this.props.current_talk.signaturePerson}</div>
                 </div>
                 <div className='headerIcon'>
-                  <IconUserCardPhone
-                  />
+                  {/* <IconUserCardPhone/> */}
 
                   <Dropdown
                     clickToHide={true}
@@ -278,10 +282,11 @@ export default connect(
     hostInfo: state.userInfo,
     current_talk_messages: state.current_talk_messages,
     socket_io: state.socket_io,
-    current_talk_conversation: state.current_talk_conversation
+    current_talk_conversation: state.current_talk_conversation,
   }),
   {
     getFriendsLists: friends_list_action,
-    push_message: push_send_action
+    push_message: push_send_action,
+    set_message_flag: update_message_list_action
   }
 )(index)

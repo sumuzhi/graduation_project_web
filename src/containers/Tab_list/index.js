@@ -58,8 +58,8 @@ class index extends Component {
 
   componentDidMount() {
     Toast.success("Welcome: " + this.props.userInfo.username + " !")
-    document.documentElement.style.overflow = 'hidden';
-    window.addEventListener("resize", this.handleHeight)
+    document.documentElement.style.overflow = 'hidden';//隐藏body的滚动条
+    window.addEventListener("resize", this.handleHeight)//监听窗口大小改变
     this.sendForList()
     this.connectsocket()
   }

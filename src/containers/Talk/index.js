@@ -127,16 +127,16 @@ class index extends Component {
 
   componentDidUpdate(preProps, preState) {
     if (preState.messageList != this.state.messageList) {
-    /*   this.props.socket_io.on("receiveMessage", (data) => {
-        if (this.props.current_talk.number_id !== data.sender) {
-          this.props.push_message(data)
-          const { sender, content } = data
-          this.props.set_message_flag({ sender, content })
-        }
-        if (this.props.activeKey !== "message") {
-          Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
-        }
-      }) */
+      /*   this.props.socket_io.on("receiveMessage", (data) => {
+          if (this.props.current_talk.number_id !== data.sender) {
+            this.props.push_message(data)
+            const { sender, content } = data
+            this.props.set_message_flag({ sender, content })
+          }
+          if (this.props.activeKey !== "message") {
+            Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
+          }
+        }) */
     }
     if (preProps.current_talk_messages != this.props.current_talk_messages) {
       this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
@@ -202,7 +202,7 @@ class index extends Component {
                         (
                           <div className="chat-message-right pb-4" key={item._id}>
                             <div>
-                              <img src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <img style={{ objectFit: "cover" }} src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
                               <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
                             </div>
                             <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
@@ -222,7 +222,7 @@ class index extends Component {
                         (
                           <div className="chat-message-left pb-4" key={item._id}>
                             <div className='mr-1'>
-                              <img src={current_talk.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <img style={{ objectFit: "cover" }} src={current_talk.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
                               <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
                             </div>
                             <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">

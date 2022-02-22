@@ -113,8 +113,9 @@ class ShowSelfInfomation extends Component {
         >
           <div className="headerImg">
             <Upload
-              data={this.props.userInfo}
+              data={{ username: this.props.userInfo.username, number_id: this.props.userInfo.number_id }}
               className="avatar-upload"
+              name={"aaa"}
               action="http://localhost:3000/update_userPhoto"
               onSuccess={this.onSuccess}
               accept='image/*'
@@ -124,9 +125,7 @@ class ShowSelfInfomation extends Component {
             >
               <Avatar src={this.props.userInfo.userPhotoImg}
                 hoverMask={this.hoverMask}
-                size="extra-large" style={{ margin: "0 auto" }}>
-                U
-              </Avatar>
+                size="extra-large" style={{ margin: "0 auto" }} />
             </Upload>
 
           </div>

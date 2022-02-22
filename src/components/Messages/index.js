@@ -103,7 +103,7 @@ class index extends Component {
                   <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}>
                     {item.username}
                   </span>
-                  <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
+                  <p style={{ maxWidth: 200, height: 20, overflow: 'hidden', color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
                     {item.content}
                   </p>
                 </div>

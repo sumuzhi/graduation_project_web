@@ -127,7 +127,7 @@ class index extends Component {
 
   componentDidUpdate(preProps, preState) {
     if (preState.messageList != this.state.messageList) {
-      this.props.socket_io.on("receiveMessage", (data) => {
+    /*   this.props.socket_io.on("receiveMessage", (data) => {
         if (this.props.current_talk.number_id !== data.sender) {
           this.props.push_message(data)
           const { sender, content } = data
@@ -136,7 +136,7 @@ class index extends Component {
         if (this.props.activeKey !== "message") {
           Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
         }
-      })
+      }) */
     }
     if (preProps.current_talk_messages != this.props.current_talk_messages) {
       this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })

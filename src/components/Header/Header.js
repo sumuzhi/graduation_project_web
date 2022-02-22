@@ -7,31 +7,25 @@ import { DeleteUserInfoAction, disconnect_socket_action } from '../../redux/acti
 import { delete_friends_list_action } from "../../redux/actions/friend_list_action";
 import { delete_current_talk_action } from "../../redux/actions/current_talk_action";
 import { delete_current_talk_messages_action } from "../../redux/actions/current_messages_action";
+import { current_friend_action } from '../../redux/actions/current_friend_action'
 
-import ShowSelfInfomation from '../../components/ShowSelfInfomation/ShowSelfInfomation'
+import ShowSelfInfomation from '../ShowSelfInfomation/ShowSelfInfomation'
 
 import './index.css'
 
-class index extends Component {
+class Header extends Component {
 
   state = {
     data: [],
-    color: ['amber', 'indigo', 'cyan'],
-    list: [],
     visible: false,
-    placement: "left",
     showSelfFlag: false
   };
-
-  handle = () => {
-  }
 
   //展示添加好友组件
   handleAddFriend = (value) => {
     const changeModel = this.props.changeModel
     changeModel()
   }
-
 
   //退出登录
   handleQuit = () => {
@@ -52,39 +46,42 @@ class index extends Component {
     this.setState({ showSelfFlag: false })
   }
 
-  changePlacement = e => {
-    this.setState({
-      placement: e.target.value
-    })
-  }
+  // ----------------------------搜索------------------------------------
 
-  search(value) {
+  search = (value) => {
     let result;
+    console.log(58, value);
     if (value) {
-      result = this.state.list.map(item => {
-        return { ...item, value: item.name, label: item.email };
+      result = this.props.friends_lists.filter(item => {
+        return item.username.indexOf(value) !== -1
       });
     } else {
       result = [];
     }
+    if (result.length !== 0) {
+      result.map((c) => {
+        c.value = { ...c }
+      })
+    }
     this.setState({ data: result });
   }
 
-  renderOption(item) {
-    let optionStyle = {
-      display: 'flex',
-    };
+  renderOption = (item) => {
     return (
       <>
-        <Avatar color={item.color} size="small">
-          {item.abbr}
-        </Avatar>
+        <Avatar src={item.userPhoto} size="small" />
         <div style={{ marginLeft: 4 }}>
-          <div style={{ fontSize: 14, marginLeft: 4 }}>{item.name}</div>
-          <div style={{ marginLeft: 4 }}>{item.email}</div>
+          <div style={{ fontSize: 14, marginLeft: 4 }}>{item.username}</div>
+          <div style={{ marginLeft: 4 }}>{item.signaturePerson}</div>
         </div>
       </>
     );
+  }
+
+  selectaaa = (item) => {
+    console.log(item);
+    this.props.set_current_friend(item)
+    this.props.changeRightCoponent(false)
   }
 
   render() {
@@ -115,14 +112,15 @@ class index extends Component {
 
           {/* 搜索 */}
           <AutoComplete
-            data={this.state.data}
+            data={this.state.data}   //data为下拉框展示的数据
             prefix={<IconSearch />}
             size="large"
+            showClear={true}
             style={{ width: 260, marginTop: "-10px", marginLeft: "10px" }}
-            renderSelectedItem={option => option.email}
+            renderSelectedItem={option => option.value.username}  //点击后在输入框呈现的字符串
             renderItem={this.renderOption}
-            onSearch={this.search.bind(this)}
-            onSelect={v => console.log(v)}
+            onSearch={this.search}
+            onSelect={(e) => { this.selectaaa(e) }}  //点击下拉框中的数据后
           />
         </div>
       </>
@@ -134,13 +132,14 @@ export default connect(
   (state) => ({
     userInfo: state.userInfo,
     socket_io: state.socket_io,
-    friend_list: state.friendList
+    friends_lists: state.friends_lists
   }),
   {
     cancellationToken: DeleteUserInfoAction,
     disconnect_io: disconnect_socket_action,
     delete_friends_list: delete_friends_list_action,
     delete_current_talk: delete_current_talk_action,
-    delete_current_talk_messages: delete_current_talk_messages_action
+    delete_current_talk_messages: delete_current_talk_messages_action,
+    set_current_friend: current_friend_action
   }
-)(index)
+)(Header)

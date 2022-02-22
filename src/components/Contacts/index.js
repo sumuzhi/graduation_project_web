@@ -5,7 +5,6 @@ import { friends_list_action } from '../../redux/actions/friend_list_action'
 import {current_friend_action} from '../../redux/actions/current_friend_action'
 import './index.css'
 import { getFriendsList } from '../../API/index'
-import { change_tab_action_action } from '../../redux/actions/activeKey_action';
 
 class index extends Component {
 
@@ -17,7 +16,6 @@ class index extends Component {
   // 点击卡片，更改样式
   messageClick = (item) => {
     this.props.changeRightCoponent(false)
-    this.props.changeactiveKey("2")
     this.props.setCurrentFriend(item)
     this.setState({ active: item.number_id })
   }
@@ -86,6 +84,5 @@ export default connect(
   {
     getFriendsList: friends_list_action,
     setCurrentFriend:current_friend_action,
-    changeactiveKey:change_tab_action_action
   }
 )(index)

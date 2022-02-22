@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import './index.css'
 import { createConversation_api, getMessages } from '../../API'
-import { change_tab_action_action } from '../../redux/actions/activeKey_action';
 import { current_talk_action } from '../../redux/actions/current_talk_action';
 import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
 import { current_messages_action } from '../../redux/actions/current_messages_action'
@@ -25,7 +24,6 @@ class index extends Component {
 
   //点击发送消息
   createConversation = async () => {
-    this.props.changeActiveKey({ key: "1" })
     const sender = this.props.hostInfo.number_id
     const receiver = this.props.current_friend.number_id
     const result = await createConversation_api({ sender, receiver })
@@ -65,8 +63,8 @@ class index extends Component {
       return (
         <div>
           <Row>
-            <Col span={5}></Col>
-            <Col span={10} className="setBg">
+            <Col span={6}></Col>
+            <Col span={8} className="setBg">
               <div className="selfInfomation" >
                 <div className="shadow"></div>
                 <div className="backgroundImg" style={{ backgroundImage: 'url(' + current_friend.userPhoto + ')' }}>
@@ -85,10 +83,10 @@ class index extends Component {
                 </div>
                 <div className="footer">
                   <Button
-                    style={{ width: "200px", height: "50px", fontSize: "20px" }}
+                    style={{ width: "150px", height: "50px", fontSize: "18px" }}
                     onClick={this.createConversation} >发送消息</Button>
                   <Button
-                    style={{ width: "200px", height: "50px", fontSize: "20px" }}
+                    style={{ width: "150px", height: "50px", fontSize: "18px" }}
                     onClick={this.callVideo}>音视频通话</Button>
                 </div>
               </div>
@@ -107,7 +105,6 @@ export default connect(
     currentTalk: state.current_talk,
   }),
   {
-    changeActiveKey: change_tab_action_action,
     setCurrentTalk: current_talk_action,
     save_current_conversaion: current_talk_conversation_action,
     set_current_talk_message: current_messages_action,

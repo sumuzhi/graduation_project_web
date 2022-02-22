@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Toast, Dropdown, TextArea, Popover } from '@douyinfe/semi-ui';
+import { Row, Col, Toast, Dropdown, TextArea, Notification } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux'
 import moment from 'moment'
 import { IconUserCardVideo, IconUserCardPhone, IconSend, IconWifi, IconList, IconSonicStroked, IconSetting } from '@douyinfe/semi-icons';
@@ -128,19 +128,20 @@ class index extends Component {
   componentDidUpdate(preProps, preState) {
     if (preState.messageList != this.state.messageList) {
       this.props.socket_io.on("receiveMessage", (data) => {
-        console.log(data);
-        console.log(this.props.current_talk.number_id);
-        if (this.props.current_talk.number_id === data.sender)
-          this.props.push_message(data)
         if (this.props.current_talk.number_id !== data.sender) {
+          this.props.push_message(data)
           const { sender, content } = data
           this.props.set_message_flag({ sender, content })
+        }
+        if (this.props.activeKey !== "message") {
+          Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
         }
       })
     }
     if (preProps.current_talk_messages != this.props.current_talk_messages) {
       this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
     }
+
   }
 
 
@@ -283,6 +284,7 @@ export default connect(
     current_talk_messages: state.current_talk_messages,
     socket_io: state.socket_io,
     current_talk_conversation: state.current_talk_conversation,
+    activeKey: state.activeKey
   }),
   {
     getFriendsLists: friends_list_action,

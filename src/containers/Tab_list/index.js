@@ -6,6 +6,7 @@ import { Toast, Tabs, TabPane } from '@douyinfe/semi-ui';
 import { resize_heightAction } from '../../redux/actions/height_resize'
 import { friends_list_action } from '../../redux/actions/friend_list_action'
 import { connect_socket_action } from '../../redux/actions/login_action'
+import { change_tab_active_action } from '../../redux/actions/activeKey_action';
 import { getFriendsList } from '../../API'
 import './index.css'
 import Messages from '../../components/Messages'
@@ -50,23 +51,24 @@ class index extends Component {
   render() {
     return (
       <Tabs style={{ minWidth: 350 }}
-        defaultActiveKey={this.props.activeKey.key}
+        defaultActiveKey="message"
+        onTabClick={(e) => { this.props.change_tab_active(e) }}
       >
         <TabPane
           tab=" 消息列表 "
-          itemKey="1"
+          itemKey="message"
         >
           {this.props.friends_lists.length !== 0 && (<Messages changeRightCoponent={this.props.changeRightCoponent} />)}
         </TabPane>
         <TabPane
           tab="联系人"
-          itemKey="2"
+          itemKey="contact"
         >
           <Contacts changeRightCoponent={this.props.changeRightCoponent} />
         </TabPane>
         <TabPane
           tab="文件列表"
-          itemKey="3"
+          itemKey="fileList"
         >
           {this.props.friends_lists.length !== 0 && (<FileList userInfo={this.props.userInfo} height={this.props.screenHeight} />)}
         </TabPane>
@@ -85,6 +87,7 @@ export default connect(
   {
     changeHeight: resize_heightAction,
     setFriendList: friends_list_action,
-    connect_socket: connect_socket_action
+    connect_socket: connect_socket_action,
+    change_tab_active: change_tab_active_action
   }
 )(index)

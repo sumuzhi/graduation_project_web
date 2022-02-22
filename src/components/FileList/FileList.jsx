@@ -42,10 +42,8 @@ class FileList extends Component {
     const { file_id } = fileItem
     let result = await downloadFiles({ file_id, conversation_id })
     if (result.status === 200) {
-      console.log(result);
       const file_buffer = result.data.file_buffer
       const name = result.data.fieldname
-      console.log(name);
       const aaa = this.toArrayBuffer(file_buffer.data)
       this.download(aaa, name)
     }
@@ -66,7 +64,6 @@ class FileList extends Component {
     if (list.status === 200) {
       list.data.map(async (c) => {
         const username = this.showUsernameForConversation(c)
-        console.log(username);
         let aaa = await getFileList(c.conversation_id)
         if (aaa.status === 200) {
           const bbb = { username, conversation_id: c.conversation_id, data: aaa.result }
@@ -86,13 +83,7 @@ class FileList extends Component {
   }
 
   componentDidMount() {
-    console.log("fileList mount================================");
-    console.log(this.props.friendList);
     this.getFileList()
-  }
-
-  componentWillUnmount() {
-    console.log("fileList unmount======");
   }
 
   render() {
@@ -103,10 +94,10 @@ class FileList extends Component {
             {
               this.state.fileList.map((c, i) => (
                 c.data.length !== 0 ?
-                  <Collapse.Panel header={c.username} itemKey={i * 1}>
+                  <Collapse.Panel header={c.username} key={i + ''} itemKey={i + ''}>
                     {
-                      c.data.map((cc) => (
-                        <div role="listitem" style={{ marginBottom: "5px" }} className="semi-upload-file-card">
+                      c.data.map((cc, index) => (
+                        <div key={index} role="listitem" style={{ marginBottom: "5px" }} className="semi-upload-file-card">
                           <div className="semi-upload-file-card-preview semi-upload-file-card-preview-placeholder">
                             <IconFile />
                           </div>

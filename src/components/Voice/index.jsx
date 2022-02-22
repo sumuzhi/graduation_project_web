@@ -35,7 +35,7 @@ class index extends Component {
     fd.append("isRecorder", isRecorder);
     fd.append("duration", duration);
 
-    const data = { sender, duration, conversation_id, content, receiver: this.props.currentTalk.item.number_id, isRecorder, blob }
+    const data = { sender, duration, conversation_id, content, receiver: this.props.currentTalk.number_id, isRecorder, blob }
     this.props.socket_io.emit("sendMessage", { ...data, create_time })
     this.props.push_message({ ...data, create_time })
     const aaa = await sendRecorderMessage(fd)

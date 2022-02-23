@@ -4,8 +4,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
-import Login from './containers/Login'
-import Enroll from './containers/Enroll'
+import Login from './components/Login'
+import Enroll from './components/Enroll'
 
 ReactDOM.render(
   <BrowserRouter>

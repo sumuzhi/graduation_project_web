@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Tab_list from '../../containers/Tab_list';
+import TabList from '../../components/Tab_list';
 import Header from '../Header/Header'
 
 export default class index extends Component {
@@ -16,7 +16,7 @@ export default class index extends Component {
     return (
       <>
         <Header changeRightCoponent={this.props.changeRightCoponent}  show={this.state.showModal} changeModel={this.changeModel}></Header>
-        <Tab_list changeRightCoponent={this.props.changeRightCoponent}></Tab_list>
+        <TabList changeRightCoponent={this.props.changeRightCoponent}></TabList>
       </>
     );
   }

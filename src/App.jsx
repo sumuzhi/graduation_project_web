@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 import Nav from './components/Nav'
-import Talk from './containers/Talk'
+import Talk from './components/Talk'
 import ShowPerson from './components/ShowPersoninformation'
 import VideoPlayer from "./components/Video/VideoPlayer";
 

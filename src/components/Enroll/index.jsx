@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Form, Popover, useFormApi, Input, Toast, Button, Upload, Col, Row, TextArea } from '@douyinfe/semi-ui';
+import { Form, Toast, Button, Upload, Col, Row, } from '@douyinfe/semi-ui';
 import { IconPlus } from '@douyinfe/semi-icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import axios from 'axios';
 
 import './index.css'
 import { resize_heightAction } from '../../redux/actions/height_resize'
@@ -37,7 +36,7 @@ class index extends Component {
   //~ 点击注册按钮时后的回调函数
   handleEnroll = (e) => {
     const { msg, status } = e.response
-    if (status == 200) {
+    if (status === 200) {
       Toast.success(msg)
     }
     else Toast.error(msg);

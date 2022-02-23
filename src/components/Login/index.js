@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Form, Toast, Button } from '@douyinfe/semi-ui';
+import { Form, Toast, Button } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import JsxParser from 'react-jsx-parser'
@@ -9,9 +9,6 @@ import { LoginSend } from '../../API/index'
 import { saveUserInfoAction } from '../../redux/actions/login_action'
 
 class index extends Component {
-  constructor() {
-    super()
-  }
 
   state = {
     codeImg: '',

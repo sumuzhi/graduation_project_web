@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react'
-import { Upload, List, Avatar, Notification, Button } from '@douyinfe/semi-ui';
+import { Upload, Notification, Button } from '@douyinfe/semi-ui';
 
-import { IconDownload, IconDelete, IconEyeOpened } from '@douyinfe/semi-icons';
+import { IconDownload } from '@douyinfe/semi-icons';
 
 
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ class index extends Component {
   }
 
   formatBytes = (a, b) => {
-    if (0 == a)
+    if (0 === a)
       return "0 Bytes";
     let c = 1024, d = b || 2, e = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], f = Math.floor(Math.log(a) / Math.log(c));
     return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f]
@@ -31,7 +31,7 @@ class index extends Component {
     let result = await getFileList(this.state.data.conversation_id)
     let temp_fileList = []
     if (result.status === 200) {
-      result.result.map((c) => {
+      result.result.forEach((c) => {
         let { fieldname: name, size, mimeType: type, conversation_id, file_id } = c
         size = this.formatBytes(size)
         const aaa = { name, size, type, conversation_id, file_id }
@@ -68,7 +68,7 @@ class index extends Component {
   //点击下载图标,进行文件的下载
   downloadFile = async (fileItem) => {
     console.log('download=======')
-    Notification.success({ content: "文件正在下载,请勿重复点击",title:"下载提示" })
+    Notification.success({ content: "文件正在下载,请勿重复点击", title: "下载提示" })
     const { file_id } = fileItem
     const { conversation_id } = this.state.data
     let result = await downloadFiles({ file_id, conversation_id })
@@ -91,6 +91,7 @@ class index extends Component {
   )
 
   componentDidMount() {
+    console.log(this.props.current_conversation);
     this.setState({
       data: {
         sender: this.props.hostInfo.number_id,
@@ -129,14 +130,13 @@ class index extends Component {
   render() {
     const { hostInfo, current_conversation } = this.props
     const { FileList } = this.state
-    if (hostInfo.number_id == '' && current_conversation.length == 0 && FileList.length === 0)
+    if (hostInfo.number_id === '' || Object.keys(current_conversation).length === 0 || FileList.length === 0)
       return (<div></div>)
     else
       return (
         <div className='lightscrollbar' style={{ height: this.props.reHeight - 100 }}>
           <Upload
             className='uploadcomponent'
-            // multiple
             ref={this.ref1}
             showClear={false}
             renderFileOperation={this.renderFileOperation}

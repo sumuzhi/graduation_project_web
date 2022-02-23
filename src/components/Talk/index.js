@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Toast, Dropdown, TextArea, Notification } from '@douyinfe/semi-ui';
+import { Row, Col, Toast, Dropdown, TextArea } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux'
 import moment from 'moment'
-import { IconUserCardVideo, IconUserCardPhone, IconSend, IconWifi, IconList, IconSonicStroked, IconSetting } from '@douyinfe/semi-icons';
+import { IconSend, IconWifi, IconList, } from '@douyinfe/semi-icons';
 import { deleteFriend, getFriendsList, getMessages, sendMessages } from '../../API/index'
 import { friends_list_action } from '../../redux/actions/friend_list_action';
 import { push_send_action } from '../../redux/actions/current_messages_action'
-import { update_message_list_action } from '../../redux/actions/handle_message_list_action'
+import { update_message_list_action, push_message_list_action } from '../../redux/actions/handle_message_list_action'
 import Voice from '../../components/Voice'
 import Upload from '../../components/Upload'
 import Tip from '../../components/Tip'
@@ -31,7 +31,7 @@ class index extends Component {
   updateFriendList = () => {
     const { username, number_id } = this.props.hostInfo
     getFriendsList({ username, number_id }).then((result) => {
-      if (result.status == 200)
+      if (result.status === 200)
         this.props.getFriendsLists(result.data)
     })
   }
@@ -42,7 +42,7 @@ class index extends Component {
     const { username: apply_name, number_id: apply_id } = this.props.current_talk
     deleteFriend({ host_name, host_id, apply_id, apply_name })
       .then((result) => {
-        if (result.status == 200) {
+        if (result.status === 200) {
           Toast.success(result.msg)
           this.updateFriendList()
         }
@@ -51,7 +51,6 @@ class index extends Component {
 
   //点击发送消息
   sendMessage = async () => {
-    // console.log(this.state.text);
     const r_id = this.props.current_talk.number_id
     const c_id = this.props.current_talk_conversation.conversation_id
     const s_id = this.props.hostInfo.number_id
@@ -59,12 +58,11 @@ class index extends Component {
     const create_time = new Date().getTime()
     this.props.push_message({ ...data, create_time })
     this.props.socket_io.emit("sendMessage", { ...data, create_time })
+    this.props.push_message_to_list({ content: this.state.text, conversation_id: c_id })
     this.setState({
       text: ''
     })
-    let result = await sendMessages(data)  //保存信息到数据库中
-    // console.log(result);
-
+    sendMessages(data)  //保存信息到数据库中
   }
 
   getMessageForConversaionId = async () => {
@@ -76,7 +74,7 @@ class index extends Component {
 
   //在输入框按下回车
   enterKey = (e) => {
-    if (e.which == 13) {
+    if (e.which === 13) {
       e.preventDefault();//☆阻止元素发生默认行为.阻止enter键回车换行.☆☆最重要一步
       this.sendMessage()
 
@@ -126,28 +124,11 @@ class index extends Component {
   }
 
   componentDidUpdate(preProps, preState) {
-    if (preState.messageList != this.state.messageList) {
-      /*   this.props.socket_io.on("receiveMessage", (data) => {
-          if (this.props.current_talk.number_id !== data.sender) {
-            this.props.push_message(data)
-            const { sender, content } = data
-            this.props.set_message_flag({ sender, content })
-          }
-          if (this.props.activeKey !== "message") {
-            Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
-          }
-        }) */
-    }
-    if (preProps.current_talk_messages != this.props.current_talk_messages) {
+    if (preProps.current_talk_messages !== this.props.current_talk_messages) {
       this.ref1.current.scrollIntoView({ behavior: 'smooth', block: 'end' })
     }
-
   }
 
-
-  componentWillUnmount() {
-    console.log("umpont-----------");
-  }
 
   render() {
     const { hostInfo, current_talk_messages, current_talk } = this.props
@@ -163,7 +144,7 @@ class index extends Component {
             <div className="py-2 px-4 d-none d-lg-block">
               <div className="d-flex align-items-center py-1">
                 <div className="position-relative" >
-                  <img src={this.props.current_talk.userPhoto} style={{ objectFit: "cover" }} className="rounded-circle mr-1" width="50" height="50" />
+                  <img alt="" src={this.props.current_talk.userPhoto} style={{ objectFit: "cover" }} className="rounded-circle mr-1" width="50" height="50" />
                 </div>
                 <div className="flex-grow-1 pl-3">
                   <strong>{this.props.current_talk.username}</strong>
@@ -202,7 +183,7 @@ class index extends Component {
                         (
                           <div className="chat-message-right pb-4" key={item._id}>
                             <div>
-                              <img style={{ objectFit: "cover" }} src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <img alt="" style={{ objectFit: "cover" }} src={hostInfo.userPhotoImg} className="rounded-circle mr-1 m10" width="40" height="40" />
                               <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
                             </div>
                             <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
@@ -222,7 +203,7 @@ class index extends Component {
                         (
                           <div className="chat-message-left pb-4" key={item._id}>
                             <div className='mr-1'>
-                              <img style={{ objectFit: "cover" }} src={current_talk.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
+                              <img alt="" style={{ objectFit: "cover" }} src={current_talk.userPhoto} className="rounded-circle mr-1 m10" width="40" height="40" />
                               <div className="text-muted small text-nowrap mt-2">{moment(item.create_time).format("MM-D HH:mm")}</div>
                             </div>
                             <div className="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
@@ -289,6 +270,7 @@ export default connect(
   {
     getFriendsLists: friends_list_action,
     push_message: push_send_action,
-    set_message_flag: update_message_list_action
+    set_message_flag: update_message_list_action,
+    push_message_to_list: push_message_list_action
   }
 )(index)

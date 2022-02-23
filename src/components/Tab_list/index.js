@@ -7,7 +7,7 @@ import { friends_list_action } from '../../redux/actions/friend_list_action'
 import { connect_socket_action } from '../../redux/actions/login_action'
 import { change_tab_active_action } from '../../redux/actions/activeKey_action';
 import { push_send_action } from '../../redux/actions/current_messages_action'
-import { update_message_list_action } from '../../redux/actions/handle_message_list_action'
+import { update_message_list_action, push_message_list_action } from '../../redux/actions/handle_message_list_action'
 import { getFriendsList } from '../../API'
 import './index.css'
 import Messages from '../../components/Messages'
@@ -42,13 +42,20 @@ class index extends Component {
       console.log("socket connect status : ", socket_io.connected);
     });
 
+    socket_io.on("someoneApply", (data) => {
+      Notification.open({ title: "申请提醒", content: "收到一条新好友请求", duration: 2 })
+    })
+
     socket_io.on("receiveMessage", (data) => {
       if (this.props.current_talk.number_id !== data.sender) {
         const { sender, content } = data
         this.props.set_message_flag({ sender, content })
       }
-      if (this.props.current_talk.number_id === data.sender)
+      if (this.props.current_talk.number_id === data.sender) {
+        console.log(data);
         this.props.push_message(data)
+        this.props.push_message_to_list({ conversation_id: data.conversation_id, content: data.content })
+      }
       if (this.props.activeKey !== "message") {
         Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
       }
@@ -107,6 +114,7 @@ export default connect(
     connect_socket: connect_socket_action,
     push_message: push_send_action,
     set_message_flag: update_message_list_action,
+    push_message_to_list: push_message_list_action,
     change_tab_active: change_tab_active_action
   }
 )(index)

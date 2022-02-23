@@ -53,3 +53,6 @@ export const downloadFiles = values => axios.post(`${BASE_URL}/download_file`, v
 
 //更新个人信息
 export const updateInfo = values => axios.post(`${BASE_URL}/update_userInfo`, values)
+
+//得到每个对话的最后一条消息
+export const lastMessage = values => axios.get(`${BASE_URL}/get_last_message/${values}`)

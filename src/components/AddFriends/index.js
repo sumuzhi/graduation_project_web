@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { friends_list_action } from '../../redux/actions/friend_list_action'
-import { Button, ButtonGroup, Col, Toast, Avatar, List, Form, Modal } from '@douyinfe/semi-ui';
+import { Button, ButtonGroup, Toast, Avatar, List, Form, Modal } from '@douyinfe/semi-ui';
 
 import { searchFriend, getFriendsList, getPreFriendList, operate_apply, applyToFriend } from '../../API';
 import './index.css'
@@ -21,12 +21,12 @@ class index extends Component {
     const { username, number_id } = this.state
     applyToFriend({ apply_id, apply_name, username, number_id })
       .then((result) => {
-        if (result.status == 200) {
+        if (result.status === 200) {
           Toast.success(result.msg)
         }
       })
+    this.props.socket.emit("sendApplyTip", { apply_id })
   }
-
 
   //点击取消按钮和取消图标调用的是同一个方法
   handleCancel = (e) => {
@@ -34,7 +34,7 @@ class index extends Component {
     this.changeModel()
     console.log('点击了取消按钮');
     getFriendsList({ username, number_id }).then((result) => {
-      if (result.status == 200)
+      if (result.status === 200)
         this.props.getFriendsLists(result.data)
     })
   }
@@ -43,7 +43,7 @@ class index extends Component {
   getPreFriendsList = () => {
     const { username, number_id } = this.state
     getPreFriendList({ username, number_id }).then((result) => {
-      if (result.status == 200)
+      if (result.status === 200)
         this.setState({
           apply_list: result.data
         })
@@ -65,10 +65,10 @@ class index extends Component {
   //对申请好友进行操作
   bypassApply = (apply_name, apply_id, e) => {
     const { username, number_id } = this.state
-    const type = e.target.innerText == "通过" ? "addFriend" : ""
+    const type = e.target.innerText === "通过" ? "addFriend" : ""
     console.log(type);
     operate_apply({ username, number_id, apply_id, apply_name, type }).then((result) => {
-      if (result.status == 200) {
+      if (result.status === 200) {
         Toast.success(result.msg)
         this.getPreFriendsList()
       }
@@ -93,16 +93,13 @@ class index extends Component {
 
     return (
       <Modal
-        style={{ display: "flex" }}
+        style={{ display: "flex", width: 800 }}
         okText="关闭"
-        // fullScreen
         closeIcon={true}
-        style={{ width: 800 }}
         visible={true}
         hasCancel={false}
         onOk={this.handleCancel}
         afterClose={this.handleAfterClose} //>=1.16.0
-      // onCancel={this.handleCancel}
       >
         <div style={{ display: "flex", height: 42 }}>
           <Form layout="horizontal"
@@ -215,7 +212,8 @@ class index extends Component {
 
 export default connect(
   (state) => ({
-    friendslist: state.friends_lists
+    friendslist: state.friends_lists,
+    socket: state.socket_io
   }),
   {
     getFriendsLists: friends_list_action

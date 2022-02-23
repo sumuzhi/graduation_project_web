@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { List, Avatar, Spin } from '@douyinfe/semi-ui';
-import { getConversaionsList, getMessages } from '../../API'
+import { getMessages, lastMessage } from '../../API'
 import { current_talk_action } from '../../redux/actions/current_talk_action'
 import { current_messages_action } from '../../redux/actions/current_messages_action'
 import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
@@ -14,11 +14,10 @@ class index extends Component {
 
   state = {
     conversationList: [],//会话
-    conversation_friends_id: [],  //存的是host与friends的消息往来中的friend_id
+    conversation_friends_message: [],  //存的是host与friends的消息往来中的friend_id
     conversation_friends_list: [],//利用会话中的id拿到friends的信息
     active: 0,
     loading: true,
-    arriveMessages: '',
   }
 
   // 点击卡片，更改样式
@@ -31,47 +30,48 @@ class index extends Component {
     let currentTalkConversation = this.state.conversationList.filter((c) => {
       return c.members.includes(item.number_id)
     })
-    this.props.setCurrentTalk(item)
-    this.props.saveCurrentConversaion(currentTalkConversation[0])
-    let aaa = await getMessages(currentTalkConversation[0].conversation_id)
+    console.log(currentTalkConversation);
+    this.props.saveCurrentConversaion(currentTalkConversation[0].doc)
+    let aaa = await getMessages(currentTalkConversation[0].doc.conversation_id)
     this.props.getCurrentMessages(aaa)
   }
 
   getConversation_from_server = async () => {
     const id = this.props.userInfo.number_id
-    let result = await getConversaionsList(id)
-    if (result.status == 200) {
-      console.log(result.data);
+    let result = await lastMessage(id)
+    if (result.status === 200) {
       const { data } = result
       this.setState({ conversationList: data })
-      data.map((conversation) => {
+      data.forEach((conversation) => {
         let id_list = conversation.members.filter((c) => c !== id)
+        let obj = { number_id: id_list[0], data: conversation.doc }
         this.setState({
-          conversation_friends_id: [...this.state.conversation_friends_id, ...id_list]
+          conversation_friends_message: [...this.state.conversation_friends_message, obj]
         })
       })
       this.showMessage_friend()
     }
   }
 
+  //最后呈现结果
   showMessage_friend = () => {
     const { friends_lists } = this.props
-    let aaa = friends_lists.filter((c) => {
-      return this.state.conversation_friends_id.includes(c.number_id)
-    })
+    let aaa = friends_lists.filter(cc =>
+      this.state.conversation_friends_message.filter(c =>
+        c.number_id === cc.number_id ? (cc.content = c.data.content) && (cc.conversation_id = c.data.conversation_id) : ''
+      ).length !== 0
+    )
     this.setState({
       conversation_friends_list: [...aaa],
       loading: false
     }, () => {
+      console.log(this.state.conversation_friends_list);
       this.props.saveMessageList(this.state.conversation_friends_list)
     })
   }
 
 
   componentDidMount() {
-    this.setState({
-      arriveMessages: ' '
-    })
     this.getConversation_from_server()
   }
 
@@ -125,7 +125,6 @@ export default connect(
     reHeight: state.reHeight,
     friends_lists: state.friends_lists,
     socket_io: state.socket_io,
-    current_conversation: state.current_talk_conversation,
     message_list: state.message_list
   }),
   {

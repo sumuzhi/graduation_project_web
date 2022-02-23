@@ -47,3 +47,6 @@ export const ADDMESSAGEFLAG ='add_message_flag'
 
 //删除消息未读
 export const DELETEMESSAGEFLAG ='delete_message_flag'
+
+//追加发送或收到的信息到message_list中,在消息列表进行显示
+export const PUSHMESSAGETOLIST = 'push_message_to_list'

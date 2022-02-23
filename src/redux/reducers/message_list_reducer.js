@@ -1,4 +1,4 @@
-import { MESSAGELIST, ADDMESSAGEFLAG, DELETEMESSAGEFLAG } from '../action_types'
+import { MESSAGELIST, ADDMESSAGEFLAG, PUSHMESSAGETOLIST, DELETEMESSAGEFLAG } from '../action_types'
 
 
 export default function message_list_reducer(preState = [], action) {
@@ -6,8 +6,7 @@ export default function message_list_reducer(preState = [], action) {
   if (type === MESSAGELIST)
     return data
   if (type === ADDMESSAGEFLAG) {
-    console.log(data);
-    preState.map((c) => {
+    preState.forEach((c) => {
       if (c.number_id === data.sender) {
         if (c.read === undefined) {
           c.read = 1
@@ -20,13 +19,19 @@ export default function message_list_reducer(preState = [], action) {
     console.log(preState);
     return [...preState]
   }
+  if (type === PUSHMESSAGETOLIST) {
+    preState.forEach((c) => {
+      if (c.conversation_id === data.conversation_id) {
+        c.content = data.content
+      }
+    })
+    return [...preState]
+  }
   if (type === DELETEMESSAGEFLAG) {
-    console.log(data);
-    preState.map((c) => {
+    preState.forEach((c) => {
       if (c.number_id === data) {
         if (c.read !== undefined) {
           c.read = undefined
-          c.content = undefined
         }
       }
     })

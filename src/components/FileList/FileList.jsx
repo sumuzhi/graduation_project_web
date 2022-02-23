@@ -88,7 +88,7 @@ class FileList extends Component {
 
   render() {
     return (
-      <div className='lightscrollbar' style={{ height: this.props.height - 100 }}>
+      <div className='lightscrollbar' style={{ height: this.props.height - 150, overflow: 'auto' }}>
         <div className="semi-upload-file-list-main" role="list" aria-label="file list">
           <Collapse style={{ width: "100%" }}>
             {

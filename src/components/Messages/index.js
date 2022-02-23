@@ -69,7 +69,6 @@ class index extends Component {
 
 
   componentDidMount() {
-    console.log("did mount======");
     this.setState({
       arriveMessages: ' '
     })
@@ -82,7 +81,6 @@ class index extends Component {
         onMouseEnter={this.activeScroll}
         style={{ height: this.props.reHeight - 100, overflow: 'auto', padding: 10, minWidth: 300 }}>
         <List
-          // dataSource={this.state.conversation_friends_list}
           dataSource={this.props.message_list}
           renderItem={item => (
             <List.Item

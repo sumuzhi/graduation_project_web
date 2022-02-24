@@ -1,7 +1,4 @@
 import axios from 'axios'
-import qs from 'querystring'
-import store from "../redux/store";
-import { Toast } from '@douyinfe/semi-ui';
 // import {createDeleteUserInfoAction} from "../redux/action_creators/login_action";
 
 //自定义axios实列添加拦截器

@@ -65,7 +65,6 @@ class index extends Component {
       conversation_friends_list: [...aaa],
       loading: false
     }, () => {
-      console.log(this.state.conversation_friends_list);
       this.props.saveMessageList(this.state.conversation_friends_list)
     })
   }

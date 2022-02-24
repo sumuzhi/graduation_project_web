@@ -8,7 +8,6 @@ import { current_talk_action } from '../../redux/actions/current_talk_action';
 import { current_talk_conversation_action } from '../../redux/actions/current_talk_conversation_action';
 import { current_messages_action } from '../../redux/actions/current_messages_action'
 
-import { change_video_modal_flag_action } from '../../redux/actions/video_modal_flag_action'
 
 class index extends Component {
 
@@ -19,18 +18,20 @@ class index extends Component {
 
   componentDidMount() {
     console.log(this.props.current_friend);
+    this.parent = this.props.parent
+    console.log(this.parent);
   }
 
 
   //点击发送消息
   createConversation = async () => {
-    const sender = this.props.hostInfo.number_id
+    const sender = this.props.userInfo.number_id
     const receiver = this.props.current_friend.number_id
     const result = await createConversation_api({ sender, receiver })
     this.props.setCurrentTalk(this.props.current_friend)
     if (result.status === 201) {
       const { find_conversaion } = result
-      this.props.changeRightCoponent(true)
+      this.parent.changeRightCoponent(true)
       this.props.save_current_conversaion(find_conversaion[0])
       const aaa = await getMessages(find_conversaion[0].conversation_id)
       this.props.set_current_talk_message(aaa)
@@ -46,18 +47,18 @@ class index extends Component {
 
 
   callVideo = () => {
-    this.props.change_video_modal_flag(true)
+    const { userInfo, current_friend } = this.props
+    this.parent.sendVideo({ userInfo, current_friend })
+    this.parent.handleVideoPlayerShow()
   }
-
 
   closeVideoModal = () => {
     this.setState({ showVideoModal: false })
   }
 
-
   render() {
-    const { current_friend, hostInfo } = this.props
-    if (JSON.stringify(current_friend) === "{}" || hostInfo.number_id === '')
+    const { current_friend, userInfo } = this.props
+    if (JSON.stringify(current_friend) === "{}" || userInfo.number_id === '')
       return (<div></div>)
     else
       return (
@@ -74,10 +75,10 @@ class index extends Component {
                   </Avatar>
                 </div>
                 <div className="bodyText">
-                  <p style={{ fontSize: "16px"}}>用户名</p>
+                  <p style={{ fontSize: "16px" }}>用户名</p>
                   {current_friend.username}
                   <div className="person">
-                    <p style={{ fontSize: "16px"}}>个性签名</p>
+                    <p style={{ fontSize: "16px" }}>个性签名</p>
                     {current_friend.signaturePerson}
                   </div>
                 </div>
@@ -101,13 +102,12 @@ class index extends Component {
 export default connect(
   state => ({
     current_friend: state.current_friend,
-    hostInfo: state.userInfo,
+    userInfo: state.userInfo,
     currentTalk: state.current_talk,
   }),
   {
     setCurrentTalk: current_talk_action,
     save_current_conversaion: current_talk_conversation_action,
     set_current_talk_message: current_messages_action,
-    change_video_modal_flag: change_video_modal_flag_action
   }
 )(index)

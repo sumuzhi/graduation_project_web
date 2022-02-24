@@ -99,7 +99,7 @@ class index extends Component {
         visible={true}
         hasCancel={false}
         onOk={this.handleCancel}
-        afterClose={this.handleAfterClose} //>=1.16.0
+        afterClose={this.handleAfterClose} 
       >
         <div style={{ display: "flex", height: 42 }}>
           <Form layout="horizontal"

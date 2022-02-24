@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Upload, List, Avatar, Collapse, Notification } from '@douyinfe/semi-ui';
+import { Collapse, Notification } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux';
-import Icon, { IconDownload, IconFile } from '@douyinfe/semi-icons';
+import { IconDownload, IconFile } from '@douyinfe/semi-icons';
 import './index.css'
 import { getConversaionsList, getFileList, downloadFiles } from '../../API'
 
@@ -76,7 +76,7 @@ class FileList extends Component {
   }
 
   formatBytes = (a, b) => {
-    if (0 == a)
+    if (0 === a)
       return "0 Bytes";
     let c = 1024, d = b || 2, e = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"], f = Math.floor(Math.log(a) / Math.log(c));
     return parseFloat((a / Math.pow(c, f)).toFixed(d)) + " " + e[f]

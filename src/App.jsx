@@ -11,6 +11,16 @@ import VideoPlayer from "./components/Video/VideoPlayer";
 class App extends Component {
 
 
+  handleVideoPlayerShow = () => {
+    this.child.showModal();
+  }
+
+  sendVideo = (info) => {
+    this.child.callUser(info);
+    // console.log(userInfo, current_friend);
+  }
+
+
   state = {
     right_flag: true,//true为talk组件,false为联系人的组件
   }
@@ -19,6 +29,10 @@ class App extends Component {
     this.setState({
       right_flag: e,
     })
+  }
+
+  componentDidMount() {
+    // this.handleChind()
   }
 
   render() {
@@ -30,13 +44,14 @@ class App extends Component {
       <>
         <div>
           <Row>
-            {this.props.videoModalFlag ? <VideoPlayer /> : ''}
+            {this.props.socket_io.connected ? <VideoPlayer onRef={ref => { this.child = ref }} /> : ''}
+            {/* <VideoPlayer onRef={ref => { this.child = ref }} /> */}
             <Col span={6}>
               <Nav changeRightCoponent={this.changeRightCoponent} />
             </Col>
 
             <Col span={18}>
-              {this.state.right_flag ? <Talk /> : <ShowPerson changeRightCoponent={this.changeRightCoponent} />}
+              {this.state.right_flag ? <Talk /> : <ShowPerson parent={this} />}
             </Col>
           </Row>
         </div>
@@ -49,7 +64,7 @@ export default connect(
   state => ({
     userInfo: state.userInfo,
     current_talk_messages: state.current_talk_messages,
-    videoModalFlag: state.videoModalFlag
+    socket_io: state.socket_io
   }),
   {}
 )(App)

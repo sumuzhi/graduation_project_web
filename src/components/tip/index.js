@@ -5,7 +5,6 @@ import './index.css'
 export default class index extends Component {
   render() {
     const { screenHeight } = this.props
-    console.log(screenHeight);
     return (
       <div className="text-center setbg"
       style={{ height: screenHeight, lineHeight: screenHeight - 120 + "px" }}

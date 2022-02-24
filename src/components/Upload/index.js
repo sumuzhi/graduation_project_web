@@ -130,7 +130,7 @@ class index extends Component {
   render() {
     const { hostInfo, current_conversation } = this.props
     const { FileList } = this.state
-    if (hostInfo.number_id === '' || Object.keys(current_conversation).length === 0 || FileList.length === 0)
+    if (hostInfo.number_id === '' || Object.keys(current_conversation).length === 0)
       return (<div></div>)
     else
       return (

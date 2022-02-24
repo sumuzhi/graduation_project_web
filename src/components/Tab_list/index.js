@@ -40,6 +40,7 @@ class index extends Component {
       { query: { id: this.props.userInfo.number_id } })
     socket_io.on("connect", () => {
       console.log("socket connect status : ", socket_io.connected);
+      this.props.connect_socket(socket_io)
     });
 
     socket_io.on("someoneApply", (data) => {
@@ -52,7 +53,6 @@ class index extends Component {
         this.props.set_message_flag({ sender, content })
       }
       if (this.props.current_talk.number_id === data.sender) {
-        console.log(data);
         this.props.push_message(data)
         this.props.push_message_to_list({ conversation_id: data.conversation_id, content: data.content })
       }
@@ -60,7 +60,6 @@ class index extends Component {
         Notification.open({ title: "信息提醒", content: "收到一条新消息", duration: 1 })
       }
     })
-    this.props.connect_socket(socket_io)
   }
 
   componentDidMount() {

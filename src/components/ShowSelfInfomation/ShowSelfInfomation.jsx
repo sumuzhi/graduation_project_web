@@ -19,7 +19,7 @@ class ShowSelfInfomation extends Component {
   }
 
   handleSubmit = async () => {
-    const { username_update, usernameFlag, signaturePerson_update, signaturePerson, signaturePersonFlag } = this.state
+    const { username_update, usernameFlag, signaturePerson_update, signaturePersonFlag } = this.state
     if (usernameFlag && signaturePersonFlag)
       if (username_update !== '') {
         const { username, signaturePerson, number_id } = this.props.userInfo

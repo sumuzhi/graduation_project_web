@@ -1,18 +1,6 @@
-.modal-footbar{
-  justify-content:space-around;
-  display: flex;
-}
-/* 视频展示窗口 */
-.videoPlay{
-  position: relative;
-  height: 400px;
-  width: 700px;
-  margin: 0 auto;
-  background-color: green;
-}
 /* icon的样式 */
-
 .changeSvgSize{
+  transform:rotate(0);
   padding: 10px;
   border-radius: 50%;
   background-color: rgb(72, 149, 236);
@@ -34,11 +22,20 @@
 /* 小盒子 */
 .smallbox{
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 20px;
+  bottom: 25px;
   width: 200px;
-  height: 100px;
-  background-color: #ff0;
+  height: 150px;
+  /* background-color: #ff0; */
+}
+
+.bigbox{
+  position: absolute;
+  left: 0;
+  /* background-color: #f00; */
+  bottom: 25px;
+  width: 100%;
+  height: 100%;
 }
 
 .VideoTip{
@@ -46,7 +43,18 @@
   background-color: rgb(72, 149, 236);
   color: #fff;
   -webkit-user-select: none;  /* 禁止 DIV 中的文本被鼠标选中 */
-  -moz-user-select: none;     /* 禁止 DIV 中的文本被鼠标选中 */
-  -ms-user-select: none;      /* 禁止 DIV 中的文本被鼠标选中 */
-  user-select: none;             /* 禁止 DIV 中的文本被鼠标选中 */
+  -moz-user-select: none;     
+  -ms-user-select: none;     
+  user-select: none;         
+}
+
+/* 鼠标移入,显示图标栏 */
+.semi-modal-content:hover .modal-footbar{
+  display:flex !important;
+  justify-content:space-around;
+}
+
+/* 鼠标进入,小盒子上移 */
+.semi-modal-content:hover .smallbox{
+  bottom:120px;
 }

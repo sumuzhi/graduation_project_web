@@ -113,7 +113,6 @@ class index extends Component {
   }
 
   componentDidMount() {
-    console.log("talk mount==========");
     this.setState({
       messageList: [...this.props.current_talk_messages]
     }, () => {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Toast, Dropdown, AutoComplete, Avatar, } from '@douyinfe/semi-ui';
-import { IconStar, IconMenu, IconUserGroup, IconSearch } from '@douyinfe/semi-icons';
+import { Dropdown, AutoComplete, Avatar, } from '@douyinfe/semi-ui';
+import { IconMenu, IconSearch } from '@douyinfe/semi-icons';
 import { connect } from "react-redux";
 import AddFriends from '../AddFriends'
 import { DeleteUserInfoAction, disconnect_socket_action } from '../../redux/actions/login_action'
@@ -59,7 +59,7 @@ class Header extends Component {
       result = [];
     }
     if (result.length !== 0) {
-      result.map((c) => {
+      result.forEach((c) => {
         c.value = { ...c }
       })
     }

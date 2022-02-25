@@ -17,7 +17,6 @@ class App extends Component {
 
   sendVideo = (info) => {
     this.child.callUser(info);
-    // console.log(userInfo, current_friend);
   }
 
 
@@ -31,9 +30,6 @@ class App extends Component {
     })
   }
 
-  componentDidMount() {
-    // this.handleChind()
-  }
 
   render() {
     const isLogin = this.props.userInfo.isLogin
@@ -45,7 +41,6 @@ class App extends Component {
         <div>
           <Row>
             {this.props.socket_io.connected ? <VideoPlayer onRef={ref => { this.child = ref }} /> : ''}
-            {/* <VideoPlayer onRef={ref => { this.child = ref }} /> */}
             <Col span={6}>
               <Nav changeRightCoponent={this.changeRightCoponent} />
             </Col>

@@ -17,9 +17,7 @@ class index extends Component {
 
 
   componentDidMount() {
-    console.log(this.props.current_friend);
     this.parent = this.props.parent
-    console.log(this.parent);
   }
 
 

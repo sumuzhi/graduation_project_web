@@ -4,13 +4,14 @@ let username = localStorage.getItem('username')
 let number_id = localStorage.getItem('number_id')
 let userPhotoImg = localStorage.getItem('userPhotoImg')
 let signaturePerson = localStorage.getItem('signaturePerson')
+let token = localStorage.getItem('token')
 
 let initState = {
   username: username || '',
   number_id: number_id || '',
   userPhotoImg: userPhotoImg || '',
   signaturePerson: signaturePerson || '',
-  isLogin: username ? true : false
+  isLogin: token ? true : false
 }
 
 

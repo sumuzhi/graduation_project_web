@@ -51,10 +51,10 @@ class index extends Component {
     const { username, password, code, randomWord } = this.state
     LoginSend({ username, password, code, randomWord })
       .then((result) => {
-        const { msg, status, data } = result
+        const { msg, status, data, token } = result
         console.log(result)
         if (status === 200) {
-          this.props.saveUserInfo(data)
+          this.props.saveUserInfo({ data, token })
         } else {
           Toast.error(msg)
           this.getCodeImg()

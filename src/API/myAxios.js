@@ -1,6 +1,7 @@
 import axios from 'axios'
-// import {createDeleteUserInfoAction} from "../redux/action_creators/login_action";
-
+import { DeleteUserInfoAction } from "../redux/actions/login_action";
+import { Toast } from '@douyinfe/semi-ui';
+import store from '../redux/store'
 //自定义axios实列添加拦截器
 const instance = axios.create({
   // timeout: 4000
@@ -10,9 +11,9 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
 
-    // const { token } = store.getState().userInfo
-    // if (token) config.headers.Authorization = 'sumuzhi_' + token
-
+    const token = localStorage.getItem('token') || ''
+    // authorization
+    config.headers.Authorization = token
     // 在发送请求之前做些什么
     /**
      * 在发送请求的时候,axios默认的发送编码为json格式
@@ -24,7 +25,6 @@ instance.interceptors.request.use(
     //     // config.data = qs.stringify(config.data)
     //   }
     // }
-    // console.log(config)
     return config;
   },
   (error) => {
@@ -39,13 +39,13 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error) => {
- /*    if (error.response.status === 401) {  //当token过期后进行重新登录操作
-      // store.dispatch(createDeleteUserInfoAction())
+    if (error.response.status === 401) {  //当token过期后进行重新登录操作
+      store.dispatch(DeleteUserInfoAction())
       Toast.error("身份过期,请重新登录", 1)
     } else {
       Toast.error(error.message)
-    } */
-    // 对响应错误做点什么
+    }
+    // 对响应错误做点什么 
     return Promise.reject(error);
   });
 

@@ -3,6 +3,7 @@ import { Form, Toast, Button, Upload, Col, Row, } from '@douyinfe/semi-ui';
 import { IconPlus } from '@douyinfe/semi-icons';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import {BASE_URL} from '../../config/config'
 
 
 import './index.css'
@@ -156,7 +157,7 @@ class index extends Component {
                     data={this.state}
                     fileName="userPhoto"
                     name="userPhoto"
-                    action='http://localhost:3000/enroll'
+                    action={`${BASE_URL}/enroll`}
                     accept='image/*'
                     limit="1"
                     maxSize={1024} //最大上传1M

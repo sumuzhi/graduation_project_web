@@ -2,6 +2,9 @@ import axios from './myAxios'
 // import axios from 'axios'
 import { BASE_URL } from "../config/config";
 
+//得到图形验证码
+export const getImg = values => axios.get(`${BASE_URL}/captcha/${values}`)
+
 //请求登录
 export const LoginSend = values => axios.post(`${BASE_URL}/login`, values)
 

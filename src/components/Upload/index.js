@@ -7,6 +7,7 @@ import { IconDownload } from '@douyinfe/semi-icons';
 import { connect } from 'react-redux';
 import { getFileList, downloadFiles } from '../../API'
 import './index.css'
+import { BASE_URL } from '../../config/config';
 
 class index extends Component {
 
@@ -142,7 +143,7 @@ class index extends Component {
             renderFileOperation={this.renderFileOperation}
             onChange={(e) => { this.onChange(e) }}
             fileList={FileList}
-            action="http://localhost:3000/upload_file"
+            action={`${BASE_URL}/upload_file`}
             data={this.state.data}
             maxSize={16384}
             draggable={true}

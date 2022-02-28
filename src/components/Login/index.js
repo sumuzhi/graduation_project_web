@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Toast, Button } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import JsxParser from 'react-jsx-parser'
 import './index.css'
 import { Link, Navigate } from 'react-router-dom';
-import { LoginSend } from '../../API/index'
+import { LoginSend, getImg } from '../../API/'
 import { saveUserInfoAction } from '../../redux/actions/login_action'
 
 class index extends Component {
@@ -18,21 +17,39 @@ class index extends Component {
     codeFlag: false,
     usernameFlag: false,
     passwordFlag: false,
+    randomWord: ''
+  }
+
+  randomWord = (min = 5, max = 10) => {
+    let str = "",
+      range = min,
+      arr = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    // 随机产生
+    range = Math.round(Math.random() * (max - min)) + min;
+    for (let i = 0; i < range; i++) {
+      let pos = Math.round(Math.random() * (arr.length - 1));
+      str += arr[pos];
+    }
+    return str
   }
 
 
-  getCodeImg = () => {
-    axios.get('http://localhost:3000/captcha').then((data) => {
-      this.setState({ codeImg: data.data })
-    })
+
+  getCodeImg = async () => {
+    let randomWord = ''
+    if (this.state.randomWord === '') {
+      randomWord = this.randomWord()
+      this.setState({ randomWord })
+    }
+    let code = await getImg(this.state.randomWord || randomWord)
+    this.setState({ codeImg: code })
   }
 
 
   //~ 发送请求后的，返回的promise
   postDataForLogin = () => {
-    const { username, password, code } = this.state
-    console.log(username, password, code);
-    LoginSend({ username, password, code })
+    const { username, password, code, randomWord } = this.state
+    LoginSend({ username, password, code, randomWord })
       .then((result) => {
         const { msg, status, data } = result
         console.log(result)

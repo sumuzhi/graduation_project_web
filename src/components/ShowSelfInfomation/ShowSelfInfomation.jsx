@@ -7,6 +7,7 @@ import { saveUserInfoAction } from '../../redux/actions/login_action'
 import { updateInfo } from '../../API'
 
 import './index.css'
+import { BASE_URL } from '../../config/config';
 
 
 class ShowSelfInfomation extends Component {
@@ -116,7 +117,7 @@ class ShowSelfInfomation extends Component {
               data={{ username: this.props.userInfo.username, number_id: this.props.userInfo.number_id }}
               className="avatar-upload"
               name={"aaa"}
-              action="http://localhost:3000/update_userPhoto"
+              action={`${BASE_URL}/update_userPhoto`}
               onSuccess={this.onSuccess}
               accept='image/*'
               maxSize={1024} //最大上传1M

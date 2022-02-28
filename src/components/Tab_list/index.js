@@ -13,6 +13,7 @@ import './index.css'
 import Messages from '../../components/Messages'
 import Contacts from '../../components/Contacts'
 import FileList from '../../components/FileList/FileList'
+import { BASE_URL } from '../../config/config';
 
 
 class index extends Component {
@@ -36,7 +37,7 @@ class index extends Component {
 
   //连接socket
   connectsocket = () => {
-    const socket_io = io('ws://localhost:3000',
+    const socket_io = io(`ws://${BASE_URL}`,
       { query: { id: this.props.userInfo.number_id } })
     socket_io.on("connect", () => {
       console.log("socket connect status : ", socket_io.connected);

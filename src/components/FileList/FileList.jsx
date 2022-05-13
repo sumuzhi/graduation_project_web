@@ -36,8 +36,6 @@ class FileList extends Component {
 
   //点击下载图标,进行文件的下载
   downloadFile = async (fileItem, conversation_id) => {
-    console.log(fileItem)
-    console.log(conversation_id)
     Notification.success({ content: "文件正在下载,请勿重复点击", title: "下载提示" })
     const { file_id } = fileItem
     let result = await downloadFiles({ file_id, conversation_id })

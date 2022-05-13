@@ -20,11 +20,6 @@ instance.interceptors.request.use(
      * 服务器接收到的编码格式为urlencoding
      * 在此可以利用axios的拦截器将参数进行格式的转化
      * */
-    // if (config.method.toLowerCase() === 'post') {
-    //   if (config.data instanceof Object) {
-    //     // config.data = qs.stringify(config.data)
-    //   }
-    // }
     return config;
   },
   (error) => {
@@ -39,6 +34,7 @@ instance.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    console.log(error);
     if (error.response.status === 401) {  //当token过期后进行重新登录操作
       store.dispatch(DeleteUserInfoAction())
       Toast.error("身份过期,请重新登录", 1)

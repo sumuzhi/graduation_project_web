@@ -7,9 +7,9 @@ import { deleteFriend, getFriendsList, getMessages, sendMessages } from '../../A
 import { friends_list_action } from '../../redux/actions/friend_list_action';
 import { push_send_action } from '../../redux/actions/current_messages_action'
 import { update_message_list_action, push_message_list_action } from '../../redux/actions/handle_message_list_action'
-import Voice from '../../components/Voice'
-import Upload from '../../components/Upload'
-import Tip from '../../components/Tip'
+import Voice from '../Voice'
+import Upload from '../Upload'
+import Tip from '../Tip'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 class index extends Component {

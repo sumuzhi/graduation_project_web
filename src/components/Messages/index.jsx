@@ -22,7 +22,6 @@ class index extends Component {
 
   // 点击卡片，更改样式
   messageClick = async (item) => {
-    console.log(item);
     this.props.delete_message_list(item.number_id)
     this.props.changeRightCoponent(true)  //用来切换页面又组件的展示
     this.props.setCurrentTalk(item)

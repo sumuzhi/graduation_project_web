@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Collapse, Notification } from '@douyinfe/semi-ui';
 import { connect } from 'react-redux';
 import { IconDownload, IconFile } from '@douyinfe/semi-icons';
-import './index.css'
 import { getConversaionsList, getFileList, downloadFiles } from '../../API'
 
 class FileList extends Component {

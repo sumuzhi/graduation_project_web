@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import JsxParser from 'react-jsx-parser'
 import './index.css'
 import { Link, Navigate } from 'react-router-dom';
-import { LoginSend, getImg } from '../../API/'
+import { LoginSend, getImg } from '../../API'
 import { saveUserInfoAction } from '../../redux/actions/login_action'
 
 class index extends Component {

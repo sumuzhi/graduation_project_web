@@ -1,26 +1,26 @@
-.fontSet{
+.fontSet {
   font-size: 14px;
   font-weight: 600;
 }
-.bgImage{
+.bgImage {
   background-image: url("../../public/images/bg.png");
   background-repeat: no-repeat;
 }
-.title{
+.title {
   margin-top: 20px;
   margin-bottom: 40px;
 }
-.titleFlag{
+.titleFlag {
   font-size: 30px;
 }
-.titleSubTitle{
+.titleSubTitle {
   margin-top: 10px;
   font-size: 20px;
 }
-.semi-form-field-aaaa{
+.semi-form-field-aaaa {
   padding: 0 !important;
 }
-a:hover{
+a:hover {
   text-decoration: none;
   color: none;
 }

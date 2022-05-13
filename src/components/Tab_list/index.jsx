@@ -10,9 +10,9 @@ import { push_send_action } from '../../redux/actions/current_messages_action'
 import { update_message_list_action, push_message_list_action } from '../../redux/actions/handle_message_list_action'
 import { getFriendsList } from '../../API'
 import './index.css'
-import Messages from '../../components/Messages'
-import Contacts from '../../components/Contacts'
-import FileList from '../../components/FileList/FileList'
+import Messages from '../Messages'
+import Contacts from '../Contacts'
+import FileList from '../FileList/FileList'
 import { WS_URL } from '../../config/config';
 
 

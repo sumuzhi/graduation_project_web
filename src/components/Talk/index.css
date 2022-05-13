@@ -1,129 +1,98 @@
 .chat-online {
-    color: #34ce57
+  color: #34ce57;
 }
 
 .chat-offline {
-    color: #e4606d
+  color: #e4606d;
 }
 
 .chat-messages {
-    display: flex;
-    flex-direction: column;
-    /* max-height: 800px; */
-    overflow-y: scroll
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
 }
 
 .chat-message-left,
 .chat-message-right {
-    display: flex;
-    flex-shrink: 0
+  display: flex;
+  flex-shrink: 0;
 }
 
 .chat-message-left {
-    margin-right: auto
+  margin-right: auto;
 }
 
 .chat-message-right {
-    flex-direction: row-reverse;
-    margin-left: auto
+  flex-direction: row-reverse;
+  margin-left: auto;
 }
 .py-3 {
-    padding-top: 1rem!important;
-    padding-bottom: 1rem!important;
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }
 .px-4 {
-    padding-right: 1.5rem!important;
-    padding-left: 1.5rem!important;
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
 }
 .flex-grow-0 {
-    flex-grow: 0!important;
+  flex-grow: 0 !important;
 }
 .border-top {
-    border-top: 1px solid #dee2e6!important;
+  border-top: 1px solid #dee2e6 !important;
 }
 
-/* 滚动条 */
-.lightscrollbar::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width : 5px;  
-  }
-.lightscrollbar::-webkit-scrollbar-thumb {
-  /*滚动条里面小方块*/
-  border-radius   : 10px;
-  background-color: #fff;
-  }
-  .lightscrollbar::-webkit-scrollbar-track {
-  /*滚动条里面轨道*/
-  /* box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2); */
-  /* background   : #ededed; */
-  border-radius: 10px;
-  }
-
-.messageItem:hover{
+.messageItem:hover {
   background-color: rgb(240, 240, 240);
   border-radius: 10px;
 }
-.messageItemActive{
+.messageItemActive {
   background-color: #ff0;
 }
 
-.active{
+.active {
   background-color: rgb(189, 231, 122);
   border-radius: 10px;
 }
 
-.lightscrollbar:hover::-webkit-scrollbar-thumb{
-  background-color: skyblue;
-  width: 5px;
-}
-.lightscrollbar:hover::-webkit-scrollbar-track {
-/*滚动条里面轨道*/
-box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2);
-background   : #ededed;
-border-radius: 10px;
-}
-.icon span{
-  margin:0 5px;
+.icon span {
+  margin: 0 5px;
   font-size: 28px;
 }
-.icon{
+.icon {
   margin-left: 3px;
 }
-.paddingSetting{
+.paddingSetting {
   padding: 16px 10px !important;
 }
 /* talk头部的图标样式 */
-.headerIcon span{
-  /* margin: 0 10px; */
+.headerIcon span {
   font-size: 28px;
-  padding:10px 10px;
+  padding: 10px 10px;
 }
-.headerIcon span:hover{
+.headerIcon span:hover {
   cursor: pointer;
   background-color: rgb(230, 227, 227);
   border-radius: 50%;
 }
 
-  .m10{
-    margin: 0 10px;
-  }
+.m10 {
+  margin: 0 10px;
+}
 
-.voiceModal{
+.voiceModal {
   line-height: 50px;
   padding-left: 20px;
   height: 50px;
   width: 100px;
-  /* background-color: #f00; */
-  /* border: ; */
   border-radius: 50px;
 }
 
-.voicefontSize{
+.voicefontSize {
   font-size: 25px;
 }
-.dlb{
+.dlb {
   display: inline-block;
 }
-.bg-light{
-  background-color: #f2eef2!important;
+.bg-light {
+  background-color: #f2eef2 !important;
 }

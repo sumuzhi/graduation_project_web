@@ -122,7 +122,7 @@ class index extends Component {
       console.log(fileList[fileList.length - 1]);
       fileList[fileList.length - 1]["file_id"] = fileList[fileList.length - 1].response.file_id
     }
-    let newFileList = [...fileList]; // spread to get new array
+    let newFileList = [...fileList]; // get new array
     this.setState({
       FileList: newFileList
     })

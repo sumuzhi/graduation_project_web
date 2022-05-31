@@ -166,13 +166,10 @@ class VideoPlayer extends Component {
 
   //点击取消按钮和取消图标调用的是同一个方法--点击遮盖层也是该方法
   handleCancel = (e) => {
-    console.log('点击了取消按钮');
     this.setState({ visible: false, showTip: true });
   }
 
   createUserRef = (ref) => {
-    console.log("userref create.....");
-    console.log(ref);
     this.userVideo = ref
     if (this.userVideo !== null && this.state.userStream) {
       console.log(this.state.userStream);
@@ -181,8 +178,6 @@ class VideoPlayer extends Component {
   }
 
   createMyRef = (ref) => {
-    console.log("myref create...");
-    console.log(ref);
     this.myVideo = ref
     if (this.myVideo !== null && this.state.selfStream) {
       console.log(this.state.selfStream);

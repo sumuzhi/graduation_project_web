@@ -1,6 +1,7 @@
 import { DELETE_USER_INFO, SAVE_USER_INFO, CONNECTSOCKET, DISCONNECTON } from "../action_types";
 
 export const saveUserInfoAction = ({ data, token }) => {
+  
   const { username, number_id, userPhotoBase64, signaturePerson } = data
   localStorage.setItem('username', username)
   localStorage.setItem('token', token)

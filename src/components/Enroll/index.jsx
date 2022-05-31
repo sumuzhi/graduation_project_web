@@ -87,16 +87,16 @@ class index extends Component {
       <div>
         <div className="grid">
           <Row>
-            <Col span={11}>
+            <Col span={12}>
               <div
                 className="bgImage"
                 style={{ height: this.props.screenHeight }}
               ></div>
             </Col>
-            <Col span={2}></Col>
+            <Col span={3}></Col>
             <Col span={6}>
               <div className="title">
-                <div className="titleFlag">欢迎注册QQ</div>
+                <div className="titleFlag">欢迎注册</div>
                 <div className="titleSubTitle">每一天，乐在沟通。</div>
               </div>
               <div>

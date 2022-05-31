@@ -19,6 +19,7 @@ class ShowSelfInfomation extends Component {
     usernameFlag: true
   }
 
+  //点击更新按钮
   handleSubmit = async () => {
     const { username_update, usernameFlag, signaturePerson_update, signaturePersonFlag } = this.state
     if (usernameFlag && signaturePersonFlag)
@@ -74,8 +75,9 @@ class ShowSelfInfomation extends Component {
   onSuccess = (response, file) => {
     if (response.status === 200) {
       Toast.success('头像更新成功');
+      console.log(response.data);
       const { username, number_id, signaturePerson, userPhoto: userPhotoBase64 } = response.data
-      this.props.updateUserInfo({ username, number_id, signaturePerson, userPhotoBase64 })
+      this.props.updateUserInfo({data:{ username, number_id, signaturePerson, userPhotoBase64 }})
     }
   };
 

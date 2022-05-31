@@ -6,7 +6,7 @@ import { Navigate } from "react-router-dom";
 import Nav from './components/Nav'
 import Talk from './components/Talk'
 import ShowPerson from './components/ShowPersoninformation'
-import VideoPlayer from "./components/Video/VideoPlayer";
+import VideoPlayer from "./components/Video/VideoPlayer"
 
 class App extends Component {
 
@@ -18,7 +18,6 @@ class App extends Component {
   sendVideo = (info) => {
     this.child.callUser(info);
   }
-
 
   state = {
     right_flag: true,//true为talk组件,false为联系人的组件

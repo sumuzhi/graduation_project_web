@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TabList from '../../components/Tab_list';
+import TabList from '../Tab_list';
 import Header from '../Header/Header'
 
 export default class index extends Component {

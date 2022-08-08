@@ -158,9 +158,8 @@ class index extends Component {
                     showClear label='验证码'
                     style={{ width: '100px' }}
                   />
-                  <div onClick={this.getCodeImg} className="imgVerify">
-                    <JsxParser jsx={this.state.codeImg} />
-                  </div>
+                  <div onClick={this.getCodeImg} className="imgVerify" dangerouslySetInnerHTML={{ __html: this.state.codeImg }}></div>
+                    {/* <JsxParser jsx={this.state.codeImg} /> */}
                 </div>
                 <div style={{ display: 'flex', marginTop: 10, alignItems: 'center' }}>
                   <Button theme='borderless' style={{ marginLeft: 50 }} onClick={this.handleSubmit}>登录</Button>

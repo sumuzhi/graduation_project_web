@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #3399ff;
+            overflow: hidden;
+        }
+        body >div{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin:  auto auto;
+            width: 300px;
+            height: 300px;
+            background-color: deeppink;
+            border: 20px solid silver;
+        }
+        body >div >div{
+            width: 100%;
+            margin-top: 100px;
+            height: 100px;
+            background-color: green;
+ 
+        }
+        body >div >div >span{
+            display: block;
+            height: 100%;
+            width: 40%;
+            background-color: darkred;
+            position: relative;
+        }
+        body >div >div >span >a{
+            position: absolute;
+            display: block;
+            width: 40px;
+            height: 40px;
+            bottom: 0;
+            right: 0;
+            background-color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+<div id="top">
+    <div>
+        <span>
+            <a href=""></a>
+        </span>
+    </div>
+</div>
+</body>
+<script>
+    window.οnlοad=function(){
+      document.addEventListener('mousemove',function(e){
+          var a= e.pageX;//鼠标在页面中的坐标位置，可能大于整个屏幕
+          var ay= e.pageY;//鼠标在页面中的坐标位置，可能大于整个屏幕
+          //console.log(ay);
+ 
+          var b= e.clientX;//鼠标在屏幕上的x坐标
+          var by= e.clientY;//鼠标在屏幕上的y坐标,所以ay>=by
+          //console.log(by);
+ 
+          var f= e.screenX;//鼠标在屏幕上的x坐标
+          var fy= e.screenY;
+          //console.log(fy);
+ 
+          //偏移量
+          var c=document.getElementById("top").offsetWidth;
+          var ch=document.getElementById("top").offsetHeight;
+          //console.log(c);//元素在水平空间上占用的宽度大小。包括滚动栏和边框
+          var ct=document.getElementById("top").offsetTop;
+          var cl=document.getElementById("top").offsetLeft;
+          //console.log(ct);//元素上边框至包括元素上边框的距离
+ 
+          //客户区大小
+          var d=document.getElementById("top").clientWidth;
+          var dh=document.getElementById("top").clientHeight;
+          //console.log(d);//元素内部空间的大小，就是不包框边框和滚所以动条，offsetWidth>=clientWidth
+ 
+          //滚动栏大小
+          var e=document.getElementById("top").scrollWidth;
+          var eh=document.getElementById("top").scrollHeight;
+          //console.log(e);//没有滚动栏情况下的宽度
+ 
+          var et=document.getElementById("top").scrollTop;
+          var el=document.getElementById("top").scrollLeft;
+          //console.log(et);//0
+          console.log(el);//0
+      },false)
+    };
+</script>
+</html>

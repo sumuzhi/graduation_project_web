@@ -119,7 +119,6 @@ class index extends Component {
 
   onChange = ({ fileList, currentFile }) => {
     if (currentFile.status === 'success') {
-      console.log(fileList[fileList.length - 1]);
       fileList[fileList.length - 1]["file_id"] = fileList[fileList.length - 1].response.file_id
     }
     let newFileList = [...fileList]; // get new array
